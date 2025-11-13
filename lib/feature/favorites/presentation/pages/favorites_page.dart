@@ -1,9 +1,11 @@
+import 'package:catalog_product/core/widgets/product_search_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:catalog_product/feature/favorites/presentation/bloc/favorites_bloc.dart';
 import 'package:catalog_product/feature/favorites/presentation/widgets/favorite_product_card.dart';
 import 'package:catalog_product/core/widgets/empty_state_widget.dart';
 import 'package:catalog_product/feature/product_catalog/presentation/widgets/custom_button.dart';
+
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({super.key});
@@ -42,6 +44,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                 return CustomScrollView(
                   slivers: [
                     SliverAppBar(
+                      
                       title: const Text("Улюблені"),
                       centerTitle: true,
                       elevation: 0,
@@ -52,28 +55,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
                         preferredSize: const Size.fromHeight(70),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: TextField(
+                          child: CustomSearchField(
                             controller: _searchController,
-                            decoration: InputDecoration(
-                              hintText: 'Пошук продуктів...',
-                              prefixIcon: const Icon(Icons.search),
-                              suffixIcon: searchQuery.isNotEmpty
-                                  ? IconButton(
-                                      icon: const Icon(Icons.clear),
-                                      onPressed: () {
-                                        _searchController.clear();
-                                        context.read<FavoritesBloc>().add(
-                                          const FavoritesEvent.searchProducts(''),
-                                        );
-                                      },
-                                    )
-                                  : null,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              filled: true,
-                              fillColor: Theme.of(context).cardColor,
-                            ),
+                            searchQuery: searchQuery,
                             onChanged: (value) {
                               context.read<FavoritesBloc>().add(
                                 FavoritesEvent.searchProducts(value),

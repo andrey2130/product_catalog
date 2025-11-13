@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:catalog_product/core/theme/cubit/theme_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:injectable/injectable.dart';
 
@@ -8,12 +7,11 @@ class StorageService {
   static const String _favoritesKey = 'favorites';
   static const String _cartKey = 'cart';
   static const String _cartQuantitiesKey = 'cart_quantities';
-  static const String _themeModeKey = 'theme_mode';
+  
 
   Future<SharedPreferences> get _prefs async =>
       await SharedPreferences.getInstance();
 
-  // Favorites
   Future<Set<String>> getFavoriteIds() async {
     final prefs = await _prefs;
     final favoritesJson = prefs.getString(_favoritesKey);
@@ -41,7 +39,7 @@ class StorageService {
     await saveFavoriteIds(favorites);
   }
 
-  // Cart
+
   Future<Set<String>> getCartIds() async {
     final prefs = await _prefs;
     final cartJson = prefs.getString(_cartKey);
@@ -123,31 +121,5 @@ class StorageService {
     await prefs.remove(_cartQuantitiesKey);
   }
 
-  // Theme
-  Future<void> setThemeMode(ThemeState themeMode) async {
-    final prefs = await _prefs;
-    await prefs.setString(
-      _themeModeKey,
-      themeMode.when(
-        light: () => 'light',
-        dark: () => 'dark',
-        system: () => 'system',
-      ),
-    );
-  }
-
-  Future<ThemeState> getThemeMode() async {
-    final prefs = await _prefs;
-    final themeString = prefs.getString(_themeModeKey) ?? 'system';
-    switch (themeString) {
-      case 'dark':
-        return const ThemeState.dark();
-      case 'light':
-        return const ThemeState.light();
-      case 'system':
-      default:
-        return const ThemeState.system();
-    }
-  }
 }
 

@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:catalog_product/core/storage/storage_service.dart';
+import 'package:catalog_product/core/storage/theme_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'package:injectable/injectable.dart';
@@ -9,20 +9,21 @@ part 'theme_cubit.freezed.dart';
 
 @LazySingleton()
 class ThemeCubit extends Cubit<ThemeState> {
-  final StorageService _storageService;
+  final ThemeService _themeService;
 
-  ThemeCubit(this._storageService) : super(const ThemeState.system()) {
+
+  ThemeCubit(this._themeService) : super(const ThemeState.system()) {
     _loadTheme();
   }
 
   void _loadTheme() {
-    _storageService.getThemeMode().then((savedTheme) {
+    _themeService.getThemeMode().then((savedTheme) {
       emit(savedTheme);
     });
   }
 
   Future<void> setTheme(ThemeState theme) async {
-    await _storageService.setThemeMode(theme);
+    await _themeService.setThemeMode(theme);
     emit(theme);
   }
 
@@ -33,7 +34,7 @@ class ThemeCubit extends Cubit<ThemeState> {
       system: () => const ThemeState.light(),
     );
 
-    await _storageService.setThemeMode(newTheme);
+    await _themeService.setThemeMode(newTheme);
     emit(newTheme);
   }
 }

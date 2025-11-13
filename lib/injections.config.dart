@@ -13,6 +13,7 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
 import 'core/storage/storage_service.dart' as _i263;
+import 'core/storage/theme_service.dart' as _i562;
 import 'core/theme/cubit/theme_cubit.dart' as _i577;
 import 'core/usecases/search_products_usecase.dart' as _i441;
 import 'feature/cart/data/datasource/cart_datasource.dart' as _i591;
@@ -50,6 +51,7 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     gh.factory<_i263.StorageService>(() => _i263.StorageService());
+    gh.factory<_i562.ThemeService>(() => _i562.ThemeService());
     gh.factory<_i441.SearchProductsUsecase>(
       () => _i441.SearchProductsUsecase(),
     );
@@ -57,7 +59,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i513.ProductCatalogDatasourceImpl(gh<_i263.StorageService>()),
     );
     gh.lazySingleton<_i577.ThemeCubit>(
-      () => _i577.ThemeCubit(gh<_i263.StorageService>()),
+      () => _i577.ThemeCubit(gh<_i562.ThemeService>()),
     );
     gh.factory<_i591.CartDatasource>(
       () => _i591.CartDatasourceImpl(gh<_i513.ProductCatalogDatasource>()),

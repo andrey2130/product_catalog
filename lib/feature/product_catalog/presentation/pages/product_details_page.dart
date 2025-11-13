@@ -5,6 +5,7 @@ import 'package:catalog_product/data/models/product_model.dart';
 
 import 'package:catalog_product/feature/product_catalog/presentation/bloc/product_bloc.dart';
 import 'package:catalog_product/feature/product_catalog/presentation/widgets/custom_button.dart';
+import 'package:go_router/go_router.dart';
 
 class ProductDetailsPage extends StatelessWidget {
   final ProductModel product;
@@ -243,6 +244,20 @@ class ProductDetailsPage extends StatelessWidget {
       expandedHeight: 300,
       pinned: true,
       backgroundColor: colorScheme.surface,
+      leading: Container(
+        margin: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: Colors.black.withValues(alpha: 0.3),
+          shape: BoxShape.circle,
+        ),
+        child: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          onPressed: () => context.pop(),
+        ),
+      ),
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: false,
         background: Stack(

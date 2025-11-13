@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:catalog_product/feature/product_catalog/presentation/widgets/custom_button.dart';
 import 'package:catalog_product/feature/product_catalog/presentation/widgets/product_list_item.dart';
-import 'package:catalog_product/feature/product_catalog/presentation/widgets/product_search_field.dart';
+import 'package:catalog_product/core/widgets/product_search_field.dart';
 import 'package:catalog_product/feature/product_catalog/presentation/bloc/product_bloc.dart';
 
 class ProductCatalogPage extends StatefulWidget {
@@ -67,9 +67,14 @@ class _ProductCatalogPageState extends State<ProductCatalogPage> {
                         preferredSize: const Size.fromHeight(70),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: ProductSearchField(
+                          child: CustomSearchField(
                             controller: _searchController,
                             searchQuery: searchQuery,
+                            onChanged: (value) {
+                              context.read<ProductBloc>().add(
+                                ProductEvent.searchProducts(value),
+                              );
+                            },
                           ),
                         ),
                       ),

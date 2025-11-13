@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:catalog_product/feature/product_catalog/presentation/bloc/product_bloc.dart';
 
-class ProductSearchField extends StatelessWidget {
+class CustomSearchField extends StatelessWidget {
   final TextEditingController controller;
   final String searchQuery;
-
-  const ProductSearchField({
+  final Function(String) onChanged;
+  const CustomSearchField({
     super.key,
     required this.controller,
     required this.searchQuery,
+    required this.onChanged,
   });
 
   @override
@@ -24,9 +23,7 @@ class ProductSearchField extends StatelessWidget {
                 icon: const Icon(Icons.clear),
                 onPressed: () {
                   controller.clear();
-                  context.read<ProductBloc>().add(
-                    ProductEvent.searchProducts(''),
-                  );
+                  onChanged('');
                 },
               )
             : null,
@@ -36,11 +33,7 @@ class ProductSearchField extends StatelessWidget {
         filled: true,
         fillColor: Theme.of(context).cardColor,
       ),
-      onChanged: (value) {
-        context.read<ProductBloc>().add(
-          ProductEvent.searchProducts(value),
-        );
-      },
+      onChanged: onChanged,
     );
   }
 }

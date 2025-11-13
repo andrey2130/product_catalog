@@ -13,7 +13,7 @@ abstract class ProductModel with _$ProductModel {
     required double price,
     @Default(0) int quantity,
     @Default(false) bool isFavorite,
-    @Default(false) bool inBasket,
+    @Default(false) bool inCart,
   }) = _ProductModel;
 
   factory ProductModel.fromJson(Map<String, dynamic> json) =>

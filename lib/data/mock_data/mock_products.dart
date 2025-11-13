@@ -10,7 +10,7 @@ final List<ProductModel> mockProducts = [
         'https://i.citrus.world/imgcache/size_800/uploads/shop/1/6/1699343297-opt.webp',
     price: 21399,
     isFavorite: true,
-    inBasket: false,
+    inCart: false,
     quantity: 1,
   ),
   ProductModel(
@@ -22,7 +22,7 @@ final List<ProductModel> mockProducts = [
         'https://gfx3.senetic.com/akeneo-catalog/4/9/7/8/4978247b1f8221766f2fde85abbd88e7720179a4_1652545_RRT_00010_image1.jpg',
     price: 34999,
     isFavorite: false,
-    inBasket: false,
+    inCart: false,
     quantity: 1,
   ),
   ProductModel(
@@ -33,7 +33,7 @@ final List<ProductModel> mockProducts = [
     imageUrl: 'https://m.media-amazon.com/images/I/61-PblYntsL._AC_SL1500_.jpg',
     price: 13814,
     isFavorite: false,
-    inBasket: false,
+    inCart: false,
     quantity: 1,
   ),
   ProductModel(
@@ -45,7 +45,7 @@ final List<ProductModel> mockProducts = [
         'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MQD83_AV3?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1660803972361',
     price: 8499,
     isFavorite: false,
-    inBasket: false,
+    inCart: false,
     quantity: 1,
   ),
   ProductModel(
@@ -56,7 +56,7 @@ final List<ProductModel> mockProducts = [
     imageUrl: 'https://content2.rozetka.com.ua/goods/images/big/409355645.jpg',
     price: 34999,
     isFavorite: false,
-    inBasket: false,
+    inCart: false,
     quantity: 1,
   ),
   ProductModel(
@@ -68,7 +68,7 @@ final List<ProductModel> mockProducts = [
         'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/mba15-midnight-select-202402?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1707260979404',
     price: 43948,
     isFavorite: false,
-    inBasket: false,
+    inCart: false,
     quantity: 1,
   ),
   ProductModel(
@@ -79,7 +79,7 @@ final List<ProductModel> mockProducts = [
     imageUrl: 'https://m.media-amazon.com/images/I/61Q0VDY0cLL._AC_SL1500_.jpg',
     price: 97262,
     isFavorite: false,
-    inBasket: false,
+    inCart: false,
     quantity: 1,
   ),
   ProductModel(
@@ -90,7 +90,7 @@ final List<ProductModel> mockProducts = [
     imageUrl: 'https://m.media-amazon.com/images/I/71f72QWurwL._AC_SL1500_.jpg',
     price: 12660,
     isFavorite: false,
-    inBasket: false,
+    inCart: false,
     quantity: 1,
   ),
   ProductModel(
@@ -101,7 +101,7 @@ final List<ProductModel> mockProducts = [
     imageUrl: 'https://m.media-amazon.com/images/I/51SKmu2G9xL._AC_SL1500_.jpg',
     price: 12299,
     isFavorite: false,
-    inBasket: false,
+    inCart: false,
     quantity: 1,
   ),
   ProductModel(
@@ -113,7 +113,7 @@ final List<ProductModel> mockProducts = [
         'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/ipad-pro-12-9-select-wifi-spacegray-202210?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1664481446946',
     price: 41089,
     isFavorite: false,
-    inBasket: false,
+    inCart: false,
     quantity: 1,
   ),
   ProductModel(
@@ -124,7 +124,7 @@ final List<ProductModel> mockProducts = [
     imageUrl: 'https://m.media-amazon.com/images/I/61nA5u0N+qL._AC_SL1000_.jpg',
     price: 6760,
     isFavorite: false,
-    inBasket: false,
+    inCart: false,
     quantity: 1,
   ),
   ProductModel(
@@ -135,7 +135,7 @@ final List<ProductModel> mockProducts = [
     imageUrl: 'https://m.media-amazon.com/images/I/61ni3t1ryQL._AC_SL1500_.jpg',
     price: 5599,
     isFavorite: false,
-    inBasket: false,
+    inCart: false,
     quantity: 1,
   ),
   ProductModel(
@@ -147,7 +147,7 @@ final List<ProductModel> mockProducts = [
         'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/watch-s9-aluminum-midnight-nc-45-cell-2up?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1693181238180',
     price: 15699,
     isFavorite: false,
-    inBasket: false,
+    inCart: false,
     quantity: 1,
   ),
   ProductModel(
@@ -158,7 +158,7 @@ final List<ProductModel> mockProducts = [
     imageUrl: 'https://m.media-amazon.com/images/I/51LJ1GNR9kL._AC_SL1000_.jpg',
     price: 19990,
     isFavorite: false,
-    inBasket: false,
+    inCart: false,
     quantity: 1,
   ),
   ProductModel(
@@ -169,7 +169,7 @@ final List<ProductModel> mockProducts = [
     imageUrl: 'https://m.media-amazon.com/images/I/71X7b6lON8L._AC_SL1500_.jpg',
     price: 5719,
     isFavorite: false,
-    inBasket: false,
+    inCart: false,
     quantity: 1,
   ),
   ProductModel(
@@ -180,7 +180,7 @@ final List<ProductModel> mockProducts = [
     imageUrl: 'https://m.media-amazon.com/images/I/71j7bYFX5HL._AC_SL1500_.jpg',
     price: 45999,
     isFavorite: false,
-    inBasket: false,
+    inCart: false,
     quantity: 1,
   ),
   ProductModel(
@@ -191,7 +191,7 @@ final List<ProductModel> mockProducts = [
     imageUrl: 'https://m.media-amazon.com/images/I/81IUtQ4-3zL._AC_SL1500_.jpg',
     price: 83599,
     isFavorite: false,
-    inBasket: false,
+    inCart: false,
     quantity: 1,
   ),
   ProductModel(
@@ -202,7 +202,7 @@ final List<ProductModel> mockProducts = [
     imageUrl: 'https://m.media-amazon.com/images/I/61t7ojJ5VGL._AC_SL1500_.jpg',
     price: 22699,
     isFavorite: false,
-    inBasket: false,
+    inCart: false,
     quantity: 1,
   ),
   ProductModel(
@@ -213,7 +213,7 @@ final List<ProductModel> mockProducts = [
     imageUrl: 'https://m.media-amazon.com/images/I/71eh+2gZALL._AC_SL1500_.jpg',
     price: 31999,
     isFavorite: false,
-    inBasket: false,
+    inCart: false,
     quantity: 1,
   ),
   ProductModel(
@@ -224,7 +224,7 @@ final List<ProductModel> mockProducts = [
     imageUrl: 'https://m.media-amazon.com/images/I/61Zb4sLyAML._AC_SL1500_.jpg',
     price: 11939,
     isFavorite: false,
-    inBasket: false,
+    inCart: false,
     quantity: 1,
   ),
 ];

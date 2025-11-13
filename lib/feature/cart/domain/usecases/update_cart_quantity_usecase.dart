@@ -6,23 +6,23 @@ import 'package:catalog_product/data/models/product_model.dart';
 import 'package:catalog_product/feature/product_catalog/domain/repository/product_catalog_repository.dart';
 
 @injectable
-class UpdateBasketQuantityUsecase
-    extends UseCase<Either<AppFailure, ProductModel>, UpdateBasketQuantityParams> {
-  UpdateBasketQuantityUsecase(this._repository);
+class UpdateCartQuantityUsecase
+    extends UseCase<Either<AppFailure, ProductModel>, UpdateCartQuantityParams> {
+  UpdateCartQuantityUsecase(this._repository);
 
   final ProductCatalogRepository _repository;
 
   @override
-  Future<Either<AppFailure, ProductModel>> call(UpdateBasketQuantityParams params) {
+  Future<Either<AppFailure, ProductModel>> call(UpdateCartQuantityParams params) {
     return _repository.updateBasketQuantity(params.productId, params.quantity);
   }
 }
 
-class UpdateBasketQuantityParams {
+class UpdateCartQuantityParams {
   final String productId;
   final int quantity;
 
-  UpdateBasketQuantityParams({
+  UpdateCartQuantityParams({
     required this.productId,
     required this.quantity,
   });

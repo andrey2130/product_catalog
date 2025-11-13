@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ProductModel {
 
- String get productId; String get productName; String get description; String get imageUrl; double get price; int get quantity; bool get isFavorite; bool get inBasket;
+ String get productId; String get productName; String get description; String get imageUrl; double get price; int get quantity; bool get isFavorite; bool get inCart;
 /// Create a copy of ProductModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ProductModelCopyWith<ProductModel> get copyWith => _$ProductModelCopyWithImpl<P
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProductModel&&(identical(other.productId, productId) || other.productId == productId)&&(identical(other.productName, productName) || other.productName == productName)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.price, price) || other.price == price)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.isFavorite, isFavorite) || other.isFavorite == isFavorite)&&(identical(other.inBasket, inBasket) || other.inBasket == inBasket));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProductModel&&(identical(other.productId, productId) || other.productId == productId)&&(identical(other.productName, productName) || other.productName == productName)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.price, price) || other.price == price)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.isFavorite, isFavorite) || other.isFavorite == isFavorite)&&(identical(other.inCart, inCart) || other.inCart == inCart));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,productId,productName,description,imageUrl,price,quantity,isFavorite,inBasket);
+int get hashCode => Object.hash(runtimeType,productId,productName,description,imageUrl,price,quantity,isFavorite,inCart);
 
 @override
 String toString() {
-  return 'ProductModel(productId: $productId, productName: $productName, description: $description, imageUrl: $imageUrl, price: $price, quantity: $quantity, isFavorite: $isFavorite, inBasket: $inBasket)';
+  return 'ProductModel(productId: $productId, productName: $productName, description: $description, imageUrl: $imageUrl, price: $price, quantity: $quantity, isFavorite: $isFavorite, inCart: $inCart)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $ProductModelCopyWith<$Res>  {
   factory $ProductModelCopyWith(ProductModel value, $Res Function(ProductModel) _then) = _$ProductModelCopyWithImpl;
 @useResult
 $Res call({
- String productId, String productName, String description, String imageUrl, double price, int quantity, bool isFavorite, bool inBasket
+ String productId, String productName, String description, String imageUrl, double price, int quantity, bool isFavorite, bool inCart
 });
 
 
@@ -65,7 +65,7 @@ class _$ProductModelCopyWithImpl<$Res>
 
 /// Create a copy of ProductModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? productId = null,Object? productName = null,Object? description = null,Object? imageUrl = null,Object? price = null,Object? quantity = null,Object? isFavorite = null,Object? inBasket = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? productId = null,Object? productName = null,Object? description = null,Object? imageUrl = null,Object? price = null,Object? quantity = null,Object? isFavorite = null,Object? inCart = null,}) {
   return _then(_self.copyWith(
 productId: null == productId ? _self.productId : productId // ignore: cast_nullable_to_non_nullable
 as String,productName: null == productName ? _self.productName : productName // ignore: cast_nullable_to_non_nullable
@@ -74,7 +74,7 @@ as String,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast
 as String,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
 as double,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
 as int,isFavorite: null == isFavorite ? _self.isFavorite : isFavorite // ignore: cast_nullable_to_non_nullable
-as bool,inBasket: null == inBasket ? _self.inBasket : inBasket // ignore: cast_nullable_to_non_nullable
+as bool,inCart: null == inCart ? _self.inCart : inCart // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -160,10 +160,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String productId,  String productName,  String description,  String imageUrl,  double price,  int quantity,  bool isFavorite,  bool inBasket)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String productId,  String productName,  String description,  String imageUrl,  double price,  int quantity,  bool isFavorite,  bool inCart)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ProductModel() when $default != null:
-return $default(_that.productId,_that.productName,_that.description,_that.imageUrl,_that.price,_that.quantity,_that.isFavorite,_that.inBasket);case _:
+return $default(_that.productId,_that.productName,_that.description,_that.imageUrl,_that.price,_that.quantity,_that.isFavorite,_that.inCart);case _:
   return orElse();
 
 }
@@ -181,10 +181,10 @@ return $default(_that.productId,_that.productName,_that.description,_that.imageU
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String productId,  String productName,  String description,  String imageUrl,  double price,  int quantity,  bool isFavorite,  bool inBasket)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String productId,  String productName,  String description,  String imageUrl,  double price,  int quantity,  bool isFavorite,  bool inCart)  $default,) {final _that = this;
 switch (_that) {
 case _ProductModel():
-return $default(_that.productId,_that.productName,_that.description,_that.imageUrl,_that.price,_that.quantity,_that.isFavorite,_that.inBasket);case _:
+return $default(_that.productId,_that.productName,_that.description,_that.imageUrl,_that.price,_that.quantity,_that.isFavorite,_that.inCart);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -201,10 +201,10 @@ return $default(_that.productId,_that.productName,_that.description,_that.imageU
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String productId,  String productName,  String description,  String imageUrl,  double price,  int quantity,  bool isFavorite,  bool inBasket)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String productId,  String productName,  String description,  String imageUrl,  double price,  int quantity,  bool isFavorite,  bool inCart)?  $default,) {final _that = this;
 switch (_that) {
 case _ProductModel() when $default != null:
-return $default(_that.productId,_that.productName,_that.description,_that.imageUrl,_that.price,_that.quantity,_that.isFavorite,_that.inBasket);case _:
+return $default(_that.productId,_that.productName,_that.description,_that.imageUrl,_that.price,_that.quantity,_that.isFavorite,_that.inCart);case _:
   return null;
 
 }
@@ -216,7 +216,7 @@ return $default(_that.productId,_that.productName,_that.description,_that.imageU
 @JsonSerializable()
 
 class _ProductModel implements ProductModel {
-  const _ProductModel({required this.productId, required this.productName, required this.description, required this.imageUrl, required this.price, this.quantity = 0, this.isFavorite = false, this.inBasket = false});
+  const _ProductModel({required this.productId, required this.productName, required this.description, required this.imageUrl, required this.price, this.quantity = 0, this.isFavorite = false, this.inCart = false});
   factory _ProductModel.fromJson(Map<String, dynamic> json) => _$ProductModelFromJson(json);
 
 @override final  String productId;
@@ -226,7 +226,7 @@ class _ProductModel implements ProductModel {
 @override final  double price;
 @override@JsonKey() final  int quantity;
 @override@JsonKey() final  bool isFavorite;
-@override@JsonKey() final  bool inBasket;
+@override@JsonKey() final  bool inCart;
 
 /// Create a copy of ProductModel
 /// with the given fields replaced by the non-null parameter values.
@@ -241,16 +241,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProductModel&&(identical(other.productId, productId) || other.productId == productId)&&(identical(other.productName, productName) || other.productName == productName)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.price, price) || other.price == price)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.isFavorite, isFavorite) || other.isFavorite == isFavorite)&&(identical(other.inBasket, inBasket) || other.inBasket == inBasket));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProductModel&&(identical(other.productId, productId) || other.productId == productId)&&(identical(other.productName, productName) || other.productName == productName)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.price, price) || other.price == price)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.isFavorite, isFavorite) || other.isFavorite == isFavorite)&&(identical(other.inCart, inCart) || other.inCart == inCart));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,productId,productName,description,imageUrl,price,quantity,isFavorite,inBasket);
+int get hashCode => Object.hash(runtimeType,productId,productName,description,imageUrl,price,quantity,isFavorite,inCart);
 
 @override
 String toString() {
-  return 'ProductModel(productId: $productId, productName: $productName, description: $description, imageUrl: $imageUrl, price: $price, quantity: $quantity, isFavorite: $isFavorite, inBasket: $inBasket)';
+  return 'ProductModel(productId: $productId, productName: $productName, description: $description, imageUrl: $imageUrl, price: $price, quantity: $quantity, isFavorite: $isFavorite, inCart: $inCart)';
 }
 
 
@@ -261,7 +261,7 @@ abstract mixin class _$ProductModelCopyWith<$Res> implements $ProductModelCopyWi
   factory _$ProductModelCopyWith(_ProductModel value, $Res Function(_ProductModel) _then) = __$ProductModelCopyWithImpl;
 @override @useResult
 $Res call({
- String productId, String productName, String description, String imageUrl, double price, int quantity, bool isFavorite, bool inBasket
+ String productId, String productName, String description, String imageUrl, double price, int quantity, bool isFavorite, bool inCart
 });
 
 
@@ -278,7 +278,7 @@ class __$ProductModelCopyWithImpl<$Res>
 
 /// Create a copy of ProductModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? productId = null,Object? productName = null,Object? description = null,Object? imageUrl = null,Object? price = null,Object? quantity = null,Object? isFavorite = null,Object? inBasket = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? productId = null,Object? productName = null,Object? description = null,Object? imageUrl = null,Object? price = null,Object? quantity = null,Object? isFavorite = null,Object? inCart = null,}) {
   return _then(_ProductModel(
 productId: null == productId ? _self.productId : productId // ignore: cast_nullable_to_non_nullable
 as String,productName: null == productName ? _self.productName : productName // ignore: cast_nullable_to_non_nullable
@@ -287,7 +287,7 @@ as String,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast
 as String,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
 as double,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
 as int,isFavorite: null == isFavorite ? _self.isFavorite : isFavorite // ignore: cast_nullable_to_non_nullable
-as bool,inBasket: null == inBasket ? _self.inBasket : inBasket // ignore: cast_nullable_to_non_nullable
+as bool,inCart: null == inCart ? _self.inCart : inCart // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }

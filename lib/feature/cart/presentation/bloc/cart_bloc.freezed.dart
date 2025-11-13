@@ -12,7 +12,7 @@ part of 'cart_bloc.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$BasketEvent {
+mixin _$CartEvent {
 
 
 
@@ -29,20 +29,20 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'BasketEvent()';
+  return 'CartEvent()';
 }
 
 
 }
 
 /// @nodoc
-class $BasketEventCopyWith<$Res>  {
-$BasketEventCopyWith(CartEvent _, $Res Function(CartEvent) __);
+class $CartEventCopyWith<$Res>  {
+$CartEventCopyWith(CartEvent _, $Res Function(CartEvent) __);
 }
 
 
 /// Adds pattern-matching-related methods to [CartEvent].
-extension BasketEventPatterns on CartEvent {
+extension CartEventPatterns on CartEvent {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -55,11 +55,11 @@ extension BasketEventPatterns on CartEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( LoadBasketProducts value)?  loadBasketProducts,TResult Function( IncreaseQuantity value)?  increaseQuantity,TResult Function( DecreaseQuantity value)?  decreaseQuantity,TResult Function( RemoveProduct value)?  removeProduct,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( LoadCartProducts value)?  loadCartProducts,TResult Function( IncreaseQuantity value)?  increaseQuantity,TResult Function( DecreaseQuantity value)?  decreaseQuantity,TResult Function( RemoveProduct value)?  removeProduct,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case LoadBasketProducts() when loadBasketProducts != null:
-return loadBasketProducts(_that);case IncreaseQuantity() when increaseQuantity != null:
+case LoadCartProducts() when loadCartProducts != null:
+return loadCartProducts(_that);case IncreaseQuantity() when increaseQuantity != null:
 return increaseQuantity(_that);case DecreaseQuantity() when decreaseQuantity != null:
 return decreaseQuantity(_that);case RemoveProduct() when removeProduct != null:
 return removeProduct(_that);case _:
@@ -80,11 +80,11 @@ return removeProduct(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( LoadBasketProducts value)  loadBasketProducts,required TResult Function( IncreaseQuantity value)  increaseQuantity,required TResult Function( DecreaseQuantity value)  decreaseQuantity,required TResult Function( RemoveProduct value)  removeProduct,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( LoadCartProducts value)  loadCartProducts,required TResult Function( IncreaseQuantity value)  increaseQuantity,required TResult Function( DecreaseQuantity value)  decreaseQuantity,required TResult Function( RemoveProduct value)  removeProduct,}){
 final _that = this;
 switch (_that) {
-case LoadBasketProducts():
-return loadBasketProducts(_that);case IncreaseQuantity():
+case LoadCartProducts():
+return loadCartProducts(_that);case IncreaseQuantity():
 return increaseQuantity(_that);case DecreaseQuantity():
 return decreaseQuantity(_that);case RemoveProduct():
 return removeProduct(_that);case _:
@@ -104,11 +104,11 @@ return removeProduct(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( LoadBasketProducts value)?  loadBasketProducts,TResult? Function( IncreaseQuantity value)?  increaseQuantity,TResult? Function( DecreaseQuantity value)?  decreaseQuantity,TResult? Function( RemoveProduct value)?  removeProduct,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( LoadCartProducts value)?  loadCartProducts,TResult? Function( IncreaseQuantity value)?  increaseQuantity,TResult? Function( DecreaseQuantity value)?  decreaseQuantity,TResult? Function( RemoveProduct value)?  removeProduct,}){
 final _that = this;
 switch (_that) {
-case LoadBasketProducts() when loadBasketProducts != null:
-return loadBasketProducts(_that);case IncreaseQuantity() when increaseQuantity != null:
+case LoadCartProducts() when loadCartProducts != null:
+return loadCartProducts(_that);case IncreaseQuantity() when increaseQuantity != null:
 return increaseQuantity(_that);case DecreaseQuantity() when decreaseQuantity != null:
 return decreaseQuantity(_that);case RemoveProduct() when removeProduct != null:
 return removeProduct(_that);case _:
@@ -128,10 +128,10 @@ return removeProduct(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loadBasketProducts,TResult Function( String productId)?  increaseQuantity,TResult Function( String productId)?  decreaseQuantity,TResult Function( String productId)?  removeProduct,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loadCartProducts,TResult Function( String productId)?  increaseQuantity,TResult Function( String productId)?  decreaseQuantity,TResult Function( String productId)?  removeProduct,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case LoadBasketProducts() when loadBasketProducts != null:
-return loadBasketProducts();case IncreaseQuantity() when increaseQuantity != null:
+case LoadCartProducts() when loadCartProducts != null:
+return loadCartProducts();case IncreaseQuantity() when increaseQuantity != null:
 return increaseQuantity(_that.productId);case DecreaseQuantity() when decreaseQuantity != null:
 return decreaseQuantity(_that.productId);case RemoveProduct() when removeProduct != null:
 return removeProduct(_that.productId);case _:
@@ -152,10 +152,10 @@ return removeProduct(_that.productId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loadBasketProducts,required TResult Function( String productId)  increaseQuantity,required TResult Function( String productId)  decreaseQuantity,required TResult Function( String productId)  removeProduct,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loadCartProducts,required TResult Function( String productId)  increaseQuantity,required TResult Function( String productId)  decreaseQuantity,required TResult Function( String productId)  removeProduct,}) {final _that = this;
 switch (_that) {
-case LoadBasketProducts():
-return loadBasketProducts();case IncreaseQuantity():
+case LoadCartProducts():
+return loadCartProducts();case IncreaseQuantity():
 return increaseQuantity(_that.productId);case DecreaseQuantity():
 return decreaseQuantity(_that.productId);case RemoveProduct():
 return removeProduct(_that.productId);case _:
@@ -175,10 +175,10 @@ return removeProduct(_that.productId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loadBasketProducts,TResult? Function( String productId)?  increaseQuantity,TResult? Function( String productId)?  decreaseQuantity,TResult? Function( String productId)?  removeProduct,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loadCartProducts,TResult? Function( String productId)?  increaseQuantity,TResult? Function( String productId)?  decreaseQuantity,TResult? Function( String productId)?  removeProduct,}) {final _that = this;
 switch (_that) {
-case LoadBasketProducts() when loadBasketProducts != null:
-return loadBasketProducts();case IncreaseQuantity() when increaseQuantity != null:
+case LoadCartProducts() when loadCartProducts != null:
+return loadCartProducts();case IncreaseQuantity() when increaseQuantity != null:
 return increaseQuantity(_that.productId);case DecreaseQuantity() when decreaseQuantity != null:
 return decreaseQuantity(_that.productId);case RemoveProduct() when removeProduct != null:
 return removeProduct(_that.productId);case _:
@@ -192,8 +192,8 @@ return removeProduct(_that.productId);case _:
 /// @nodoc
 
 
-class LoadBasketProducts implements CartEvent {
-  const LoadBasketProducts();
+class LoadCartProducts implements CartEvent {
+  const LoadCartProducts();
   
 
 
@@ -203,7 +203,7 @@ class LoadBasketProducts implements CartEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadBasketProducts);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadCartProducts);
 }
 
 
@@ -212,7 +212,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'BasketEvent.loadBasketProducts()';
+  return 'CartEvent.loadCartProducts()';
 }
 
 
@@ -230,7 +230,7 @@ class IncreaseQuantity implements CartEvent {
 
  final  String productId;
 
-/// Create a copy of BasketEvent
+/// Create a copy of CartEvent
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -249,14 +249,14 @@ int get hashCode => Object.hash(runtimeType,productId);
 
 @override
 String toString() {
-  return 'BasketEvent.increaseQuantity(productId: $productId)';
+  return 'CartEvent.increaseQuantity(productId: $productId)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $IncreaseQuantityCopyWith<$Res> implements $BasketEventCopyWith<$Res> {
+abstract mixin class $IncreaseQuantityCopyWith<$Res> implements $CartEventCopyWith<$Res> {
   factory $IncreaseQuantityCopyWith(IncreaseQuantity value, $Res Function(IncreaseQuantity) _then) = _$IncreaseQuantityCopyWithImpl;
 @useResult
 $Res call({
@@ -275,7 +275,7 @@ class _$IncreaseQuantityCopyWithImpl<$Res>
   final IncreaseQuantity _self;
   final $Res Function(IncreaseQuantity) _then;
 
-/// Create a copy of BasketEvent
+/// Create a copy of CartEvent
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? productId = null,}) {
   return _then(IncreaseQuantity(
@@ -296,7 +296,7 @@ class DecreaseQuantity implements CartEvent {
 
  final  String productId;
 
-/// Create a copy of BasketEvent
+/// Create a copy of CartEvent
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -315,14 +315,14 @@ int get hashCode => Object.hash(runtimeType,productId);
 
 @override
 String toString() {
-  return 'BasketEvent.decreaseQuantity(productId: $productId)';
+  return 'CartEvent.decreaseQuantity(productId: $productId)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $DecreaseQuantityCopyWith<$Res> implements $BasketEventCopyWith<$Res> {
+abstract mixin class $DecreaseQuantityCopyWith<$Res> implements $CartEventCopyWith<$Res> {
   factory $DecreaseQuantityCopyWith(DecreaseQuantity value, $Res Function(DecreaseQuantity) _then) = _$DecreaseQuantityCopyWithImpl;
 @useResult
 $Res call({
@@ -341,7 +341,7 @@ class _$DecreaseQuantityCopyWithImpl<$Res>
   final DecreaseQuantity _self;
   final $Res Function(DecreaseQuantity) _then;
 
-/// Create a copy of BasketEvent
+/// Create a copy of CartEvent
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? productId = null,}) {
   return _then(DecreaseQuantity(
@@ -362,7 +362,7 @@ class RemoveProduct implements CartEvent {
 
  final  String productId;
 
-/// Create a copy of BasketEvent
+/// Create a copy of CartEvent
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -381,14 +381,14 @@ int get hashCode => Object.hash(runtimeType,productId);
 
 @override
 String toString() {
-  return 'BasketEvent.removeProduct(productId: $productId)';
+  return 'CartEvent.removeProduct(productId: $productId)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $RemoveProductCopyWith<$Res> implements $BasketEventCopyWith<$Res> {
+abstract mixin class $RemoveProductCopyWith<$Res> implements $CartEventCopyWith<$Res> {
   factory $RemoveProductCopyWith(RemoveProduct value, $Res Function(RemoveProduct) _then) = _$RemoveProductCopyWithImpl;
 @useResult
 $Res call({
@@ -407,7 +407,7 @@ class _$RemoveProductCopyWithImpl<$Res>
   final RemoveProduct _self;
   final $Res Function(RemoveProduct) _then;
 
-/// Create a copy of BasketEvent
+/// Create a copy of CartEvent
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? productId = null,}) {
   return _then(RemoveProduct(
@@ -420,7 +420,7 @@ as String,
 }
 
 /// @nodoc
-mixin _$BasketState {
+mixin _$CartState {
 
 
 
@@ -437,20 +437,20 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'BasketState()';
+  return 'CartState()';
 }
 
 
 }
 
 /// @nodoc
-class $BasketStateCopyWith<$Res>  {
-$BasketStateCopyWith(CartState _, $Res Function(CartState) __);
+class $CartStateCopyWith<$Res>  {
+$CartStateCopyWith(CartState _, $Res Function(CartState) __);
 }
 
 
 /// Adds pattern-matching-related methods to [CartState].
-extension BasketStatePatterns on CartState {
+extension CartStatePatterns on CartState {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -620,7 +620,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'BasketState.initial()';
+  return 'CartState.initial()';
 }
 
 
@@ -652,7 +652,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'BasketState.loading()';
+  return 'CartState.loading()';
 }
 
 
@@ -677,7 +677,7 @@ class Loaded implements CartState {
 
  final  double total;
 
-/// Create a copy of BasketState
+/// Create a copy of CartState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -696,14 +696,14 @@ int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(
 
 @override
 String toString() {
-  return 'BasketState.loaded(products: $products, total: $total)';
+  return 'CartState.loaded(products: $products, total: $total)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $LoadedCopyWith<$Res> implements $BasketStateCopyWith<$Res> {
+abstract mixin class $LoadedCopyWith<$Res> implements $CartStateCopyWith<$Res> {
   factory $LoadedCopyWith(Loaded value, $Res Function(Loaded) _then) = _$LoadedCopyWithImpl;
 @useResult
 $Res call({
@@ -722,7 +722,7 @@ class _$LoadedCopyWithImpl<$Res>
   final Loaded _self;
   final $Res Function(Loaded) _then;
 
-/// Create a copy of BasketState
+/// Create a copy of CartState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? products = null,Object? total = null,}) {
   return _then(Loaded(
@@ -744,7 +744,7 @@ class Failure implements CartState {
 
  final  String message;
 
-/// Create a copy of BasketState
+/// Create a copy of CartState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -763,14 +763,14 @@ int get hashCode => Object.hash(runtimeType,message);
 
 @override
 String toString() {
-  return 'BasketState.failure(message: $message)';
+  return 'CartState.failure(message: $message)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $FailureCopyWith<$Res> implements $BasketStateCopyWith<$Res> {
+abstract mixin class $FailureCopyWith<$Res> implements $CartStateCopyWith<$Res> {
   factory $FailureCopyWith(Failure value, $Res Function(Failure) _then) = _$FailureCopyWithImpl;
 @useResult
 $Res call({
@@ -789,7 +789,7 @@ class _$FailureCopyWithImpl<$Res>
   final Failure _self;
   final $Res Function(Failure) _then;
 
-/// Create a copy of BasketState
+/// Create a copy of CartState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
   return _then(Failure(

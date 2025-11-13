@@ -4,9 +4,8 @@ import 'package:injectable/injectable.dart';
 import 'package:catalog_product/core/usecases/usecase.dart';
 import 'package:catalog_product/data/models/product_model.dart';
 import 'package:catalog_product/feature/product_catalog/domain/usecase/get_all_product_usecase.dart';
-import 'package:catalog_product/feature/product_catalog/domain/usecase/get_product_by_id_usecase.dart';
 import 'package:catalog_product/feature/product_catalog/domain/usecase/toggle_favorite_usecase.dart';
-import 'package:catalog_product/feature/cart/domain/usecases/add_to_basket_usecase.dart';
+import 'package:catalog_product/feature/cart/domain/usecases/add_to_cart_usecase.dart';
 
 part 'product_event.dart';
 part 'product_state.dart';
@@ -15,15 +14,14 @@ part 'product_bloc.freezed.dart';
 @Injectable()
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final GetAllProductUsecase _getAllProductUsecase;
-  final GetProductByIdUsecase _getProductByIdUsecase;
   final ToggleFavoriteUsecase _toggleFavoriteUsecase;
-  final AddToBasketUsecase _addToBasketUsecase;
+  final AddToCartUsecase _addToCartUsecase;
 
   ProductBloc(
     this._getAllProductUsecase,
-    this._getProductByIdUsecase,
+
     this._toggleFavoriteUsecase,
-    this._addToBasketUsecase,
+    this._addToCartUsecase,
   ) : super(const ProductState.initial()) {
     on<LoadAllProducts>(_loadAllproducts);
     on<ToggleFavorite>(_toggleFavorite);
@@ -144,7 +142,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       final updatedProducts = currentState.products.map((product) {
         if (product.productId == event.productId) {
           return product.copyWith(
-            inBasket: true,
+            inCart: true,
             quantity: product.quantity + 1,
           );
         }
@@ -159,7 +157,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       );
 
       // Call the usecase to persist the change
-      final result = await _addToBasketUsecase(
+      final result = await _addToCartUsecase(
         AddToBasketParams(
           productId: event.productId,
           quantity: 1,

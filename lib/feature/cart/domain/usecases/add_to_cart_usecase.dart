@@ -6,9 +6,9 @@ import 'package:catalog_product/data/models/product_model.dart';
 import 'package:catalog_product/feature/product_catalog/domain/repository/product_catalog_repository.dart';
 
 @injectable
-class AddToBasketUsecase
+class AddToCartUsecase
     extends UseCase<Either<AppFailure, ProductModel>, AddToBasketParams> {
-  AddToBasketUsecase(this._repository);
+  AddToCartUsecase(this._repository);
 
   final ProductCatalogRepository _repository;
 

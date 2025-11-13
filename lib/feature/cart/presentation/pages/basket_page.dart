@@ -16,7 +16,7 @@ class _CartPageState extends State<CartPage> {
   @override
   void initState() {
     super.initState();
-    context.read<CartBloc>().add(const CartEvent.loadBasketProducts());
+    context.read<CartBloc>().add(const CartEvent.loadCartProducts());
   }
 
   @override
@@ -109,7 +109,7 @@ class _CartPageState extends State<CartPage> {
                     CustomButton(
                       text: "Спробувати знову",
                       onPressed: () => context.read<CartBloc>().add(
-                        const CartEvent.loadBasketProducts(),
+                        const CartEvent.loadCartProducts(),
                       ),
                     ),
                   ],

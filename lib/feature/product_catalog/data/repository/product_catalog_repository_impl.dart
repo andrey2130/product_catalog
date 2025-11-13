@@ -13,18 +13,6 @@ class ProductCatalogRepositoryImpl implements ProductCatalogRepository {
   ProductCatalogRepositoryImpl(this._datasource);
 
   @override
-  Future<Either<AppFailure, ProductModel>> getProductById(
-    String productId,
-  ) async {
-    try {
-      final product = await _datasource.getProductById(productId);
-      return Right(product);
-    } catch (e) {
-      return Left(AppFailure(message: e.toString()));
-    }
-  }
-
-  @override
   Future<Either<AppFailure, List<ProductModel>>> getAllProducts() async {
     try {
       final products = await _datasource.getAllProducts();

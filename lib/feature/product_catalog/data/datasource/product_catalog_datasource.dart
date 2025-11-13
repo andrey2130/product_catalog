@@ -6,7 +6,6 @@ import 'package:catalog_product/data/mock_data/mock_products.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class ProductCatalogDatasource {
-  Future<ProductModel> getProductById(String productId);
   Future<List<ProductModel>> getAllProducts();
   Future<ProductModel> toggleFavorite(String productId);
   Future<ProductModel> addToBasket(String productId, {int quantity = 1});
@@ -19,43 +18,7 @@ class ProductCatalogDatasourceImpl implements ProductCatalogDatasource {
   final StorageService _storageService;
 
   ProductCatalogDatasourceImpl(this._storageService);
-
-  @override
-  Future<ProductModel> getProductById(String productId) async {
-    try {
-      final product = mockProducts.firstWhere(
-        (p) => p.productId == productId,
-        orElse: () {
-          return ProductModel(
-            productId: productId,
-            productName: 'Невідомий товар',
-            description: 'Опис відсутній.',
-            imageUrl: 'https://example.com/sample-product.png',
-            price: 0.0,
-            isFavorite: false,
-          );
-        },
-      );
-
-      // Load saved states from SharedPreferences
-      final favorites = await _storageService.getFavoriteIds();
-      final basketIds = await _storageService.getCartIds();
-      final quantities = await _storageService.getCartQuantities();
-
-      return product.copyWith(
-        isFavorite: favorites.contains(productId),
-        inBasket: basketIds.contains(productId),
-        quantity: quantities[productId] ?? (basketIds.contains(productId) ? 1 : 0),
-      );
-    } catch (e, stackTrace) {
-      log(
-        'Помилка завантаження товару $productId: ${e.toString()}',
-        stackTrace: stackTrace,
-      );
-      rethrow;
-    }
-  }
-
+  
   @override
   Future<List<ProductModel>> getAllProducts() async {
     final favorites = await _storageService.getFavoriteIds();
@@ -65,7 +28,7 @@ class ProductCatalogDatasourceImpl implements ProductCatalogDatasource {
     return mockProducts.map((product) {
       return product.copyWith(
         isFavorite: favorites.contains(product.productId),
-        inBasket: basketIds.contains(product.productId),
+        inCart: basketIds.contains(product.productId),
         quantity: quantities[product.productId] ??
             (basketIds.contains(product.productId) ? 1 : 0),
       );
@@ -91,7 +54,7 @@ class ProductCatalogDatasourceImpl implements ProductCatalogDatasource {
       final product = mockProducts[index];
       return product.copyWith(
         isFavorite: favorites.contains(productId),
-        inBasket: basketIds.contains(productId),
+        inCart: basketIds.contains(productId),
         quantity: quantities[productId] ?? (basketIds.contains(productId) ? 1 : 0),
       );
     } catch (e, stackTrace) {
@@ -122,7 +85,7 @@ class ProductCatalogDatasourceImpl implements ProductCatalogDatasource {
       final product = mockProducts[index];
       return product.copyWith(
         isFavorite: favorites.contains(productId),
-        inBasket: basketIds.contains(productId),
+        inCart: basketIds.contains(productId),
         quantity: quantities[productId] ?? quantity,
       );
     } catch (e, stackTrace) {
@@ -153,7 +116,7 @@ class ProductCatalogDatasourceImpl implements ProductCatalogDatasource {
       final product = mockProducts[index];
       return product.copyWith(
         isFavorite: favorites.contains(productId),
-        inBasket: basketIds.contains(productId),
+        inCart: basketIds.contains(productId),
         quantity: quantities[productId] ?? 0,
       );
     } catch (e, stackTrace) {
@@ -184,7 +147,7 @@ class ProductCatalogDatasourceImpl implements ProductCatalogDatasource {
       final product = mockProducts[index];
       return product.copyWith(
         isFavorite: favorites.contains(productId),
-        inBasket: basketIds.contains(productId),
+        inCart: basketIds.contains(productId),
         quantity: quantities[productId] ?? 0,
       );
     } catch (e, stackTrace) {

@@ -1,0 +1,125 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:catalog_product/feature/cart/presentation/bloc/basket_bloc.dart';
+import 'package:catalog_product/feature/cart/presentation/widgets/basket_product_card.dart';
+import 'package:catalog_product/feature/product_catalog/presentation/widgets/custom_button.dart';
+
+class BasketPage extends StatefulWidget {
+  const BasketPage({super.key});
+
+  @override
+  State<BasketPage> createState() => _BasketPageState();
+}
+
+class _BasketPageState extends State<BasketPage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<BasketBloc>().add(const BasketEvent.loadBasketProducts());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      appBar: AppBar(
+        title: const Text("Кошик"),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Theme.of(context).colorScheme.surface,
+      ),
+      body: SafeArea(
+        child: BlocBuilder<BasketBloc, BasketState>(
+          builder: (context, state) {
+            return state.maybeWhen(
+              loading: () =>
+                  const Center(child: CircularProgressIndicator.adaptive()),
+              loaded: (products, total) {
+                if (products.isEmpty) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.shopping_bag_outlined,
+                          size: 80,
+                          color: Colors.grey[400],
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          "Кошик порожній",
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey[600],
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+
+                return Column(
+                  children: [
+                    Expanded(
+                      child: ListView.separated(
+                        padding: const EdgeInsets.all(16),
+                        itemCount: products.length,
+                        separatorBuilder: (_, __) => const SizedBox(height: 16),
+                        itemBuilder: (context, index) {
+                          return BasketProductCard(product: products[index]);
+                        },
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.surface,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 6,
+                            offset: const Offset(0, -2),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Сума: ₴${total.toStringAsFixed(2)}",
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              },
+              failure: (message) => Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(message, style: const TextStyle(fontSize: 16)),
+                    const SizedBox(height: 12),
+                    CustomButton(
+                      text: "Спробувати знову",
+                      onPressed: () => context.read<BasketBloc>().add(
+                        const BasketEvent.loadBasketProducts(),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              orElse: () =>
+                  const Center(child: CircularProgressIndicator.adaptive()),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}

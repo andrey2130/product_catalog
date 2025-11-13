@@ -44,12 +44,12 @@ class _MiniBrowserState extends State<MiniBrowser> {
             });
           },
          onWebResourceError: (error) {
-  if (error.errorCode != -999) {
-    setState(() {
-      _hasError = true;
-    });
-  }
-},
+          if (error.errorCode != -999) {
+            setState(() {
+              _hasError = true;
+            });
+          }
+         },
         ),
       )
       ..loadRequest(Uri.parse(initialUrl));
@@ -62,86 +62,109 @@ class _MiniBrowserState extends State<MiniBrowser> {
     _controller.loadRequest(Uri.parse(initialUrl));
   }
 
+  Future<void> _handleGoBack() async {
+    if (await _controller.canGoBack()) {
+      _controller.goBack();
+    }
+  }
+
+  Future<void> _handleGoForward() async {
+    if (await _controller.canGoForward()) {
+      _controller.goForward();
+    }
+  }
+
+  Widget _buildProgressIndicator() {
+    if (_progress == 0 || _progress == 1) {
+      return const SizedBox.shrink();
+    }
+    return LinearProgressIndicator(
+      value: _progress,
+      backgroundColor: Colors.grey[300],
+      valueColor: AlwaysStoppedAnimation<Color>(
+        Theme.of(context).primaryColor,
+      ),
+    );
+  }
+
+  Widget _buildErrorWidget() {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text('Не вдалося завантажити'),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: _reload,
+            child: const Text('Спробувати знову'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBody() {
+    return SafeArea(
+      child: Column(
+        children: [
+          _buildProgressIndicator(),
+          Expanded(
+            child: _hasError
+                ? _buildErrorWidget()
+                : WebViewWidget(controller: _controller),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBottomNavigationBar(BuildContext context) {
+    return SafeArea(
+      child: Container(
+        height: 56,
+        decoration: BoxDecoration(
+          color: Theme.of(context).appBarTheme.backgroundColor ??
+              Theme.of(context).primaryColor,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 4,
+              offset: const Offset(0, -2),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            IconButton(
+              onPressed: _handleGoBack,
+              icon: const Icon(Icons.arrow_back),
+            ),
+            IconButton(
+              onPressed: _handleGoForward,
+              icon: const Icon(Icons.arrow_forward),
+            ),
+            IconButton(
+              onPressed: _reload,
+              icon: const Icon(Icons.refresh),
+            ),
+            IconButton(
+              onPressed: () => context.pop(),
+              icon: const Icon(Icons.close),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Міні-браузер'),
-          bottom: _progress < 1.0
-              ? PreferredSize(
-                  preferredSize: const Size.fromHeight(3),
-                  child: LinearProgressIndicator(
-                    value: _progress,
-                    backgroundColor: Colors.transparent,
-                    color: Colors.blueAccent,
-                  ),
-                )
-              : null,
-        ),
-        body: SafeArea(
-          child: _hasError
-              ? Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Text('Не вдалося завантажити'),
-                      const SizedBox(height: 16),
-                      ElevatedButton(
-                        onPressed: _reload,
-                        child: const Text('Спробувати знову'),
-                      ),
-                    ],
-                  ),
-                )
-              : WebViewWidget(controller: _controller),
-        ),
-        bottomNavigationBar: SafeArea(
-          child: Container(
-            height: 56,
-            decoration: BoxDecoration(
-              color: Theme.of(context).appBarTheme.backgroundColor ??
-                  Theme.of(context).primaryColor,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 4,
-                  offset: const Offset(0, -2),
-                ),
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                IconButton(
-                  onPressed: () async {
-                    if (await _controller.canGoBack()) {
-                      _controller.goBack();
-                    }
-                  },
-                  icon: const Icon(Icons.arrow_back),
-                ),
-                IconButton(
-                  onPressed: () async {
-                    if (await _controller.canGoForward()) {
-                      _controller.goForward();
-                    }
-                  },
-                  icon: const Icon(Icons.arrow_forward),
-                ),
-                IconButton(
-                  onPressed: _reload,
-                  icon: const Icon(Icons.refresh),
-                ),
-                IconButton(
-                  onPressed: () => context.pop(),
-                  icon: const Icon(Icons.close),
-                ),
-              ],
-            ),
-          ),
-        ),
+        body: _buildBody(),
+        bottomNavigationBar: _buildBottomNavigationBar(context),
       ),
     );
   }

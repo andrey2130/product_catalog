@@ -21,6 +21,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
   ) : super(const FavoritesState.initial()) {
     on<LoadFavoriteProducts>(_loadFavoriteProducts);
     on<RemoveFavorite>(_removeFavorite);
+    on<SearchProducts>(_searchProducts);
   }
 
   Future<void> _loadFavoriteProducts(
@@ -33,7 +34,13 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
 
     result.fold(
       (failure) => emit(FavoritesState.failure(failure.message)),
-      (products) => emit(FavoritesState.loaded(products)),
+      (products) => emit(
+        FavoritesState.loaded(
+          products,
+          searchQuery: '',
+          allProducts: products,
+        ),
+      ),
     );
   }
 
@@ -41,19 +48,59 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     RemoveFavorite event,
     Emitter<FavoritesState> emit,
   ) async {
+    final currentState = state;
 
     await _toggleFavoriteUsecase(event.productId);
 
-
-    state.maybeWhen(
-      loaded: (products) {
+    currentState.maybeWhen(
+      loaded: (products, searchQuery, allProducts) {
         final updated = products
             .where((p) => p.productId != event.productId)
             .toList();
-        emit(FavoritesState.loaded(updated));
+        final updatedAll = allProducts
+            .where((p) => p.productId != event.productId)
+            .toList();
+        emit(
+          FavoritesState.loaded(
+            updated,
+            searchQuery: searchQuery,
+            allProducts: updatedAll,
+          ),
+        );
       },
       orElse: () {},
     );
+  }
+
+  void _searchProducts(SearchProducts event, Emitter<FavoritesState> emit) {
+    final currentState = state;
+
+    if (currentState is Loaded) {
+      final query = event.query.toLowerCase().trim();
+
+      if (query.isEmpty) {
+        // Показуємо всі продукти
+        emit(
+          FavoritesState.loaded(
+            currentState.allProducts,
+            searchQuery: '',
+            allProducts: currentState.allProducts,
+          ),
+        );
+      } else {
+        final filteredProducts = currentState.allProducts.where((product) {
+          return product.productName.toLowerCase().contains(query);
+        }).toList();
+
+        emit(
+          FavoritesState.loaded(
+            filteredProducts,
+            searchQuery: query,
+            allProducts: currentState.allProducts,
+          ),
+        );
+      }
+    }
   }
 }
 

@@ -4,5 +4,6 @@ part of 'favorites_bloc.dart';
 class FavoritesEvent with _$FavoritesEvent {
   const factory FavoritesEvent.loadFavoriteProducts() = LoadFavoriteProducts;
   const factory FavoritesEvent.removeFavorite(String productId) = RemoveFavorite;
+  const factory FavoritesEvent.searchProducts(String query) = SearchProducts;
 }
 

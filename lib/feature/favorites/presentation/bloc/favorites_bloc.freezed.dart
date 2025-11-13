@@ -55,12 +55,13 @@ extension FavoritesEventPatterns on FavoritesEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( LoadFavoriteProducts value)?  loadFavoriteProducts,TResult Function( RemoveFavorite value)?  removeFavorite,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( LoadFavoriteProducts value)?  loadFavoriteProducts,TResult Function( RemoveFavorite value)?  removeFavorite,TResult Function( SearchProducts value)?  searchProducts,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case LoadFavoriteProducts() when loadFavoriteProducts != null:
 return loadFavoriteProducts(_that);case RemoveFavorite() when removeFavorite != null:
-return removeFavorite(_that);case _:
+return removeFavorite(_that);case SearchProducts() when searchProducts != null:
+return searchProducts(_that);case _:
   return orElse();
 
 }
@@ -78,12 +79,13 @@ return removeFavorite(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( LoadFavoriteProducts value)  loadFavoriteProducts,required TResult Function( RemoveFavorite value)  removeFavorite,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( LoadFavoriteProducts value)  loadFavoriteProducts,required TResult Function( RemoveFavorite value)  removeFavorite,required TResult Function( SearchProducts value)  searchProducts,}){
 final _that = this;
 switch (_that) {
 case LoadFavoriteProducts():
 return loadFavoriteProducts(_that);case RemoveFavorite():
-return removeFavorite(_that);case _:
+return removeFavorite(_that);case SearchProducts():
+return searchProducts(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -100,12 +102,13 @@ return removeFavorite(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( LoadFavoriteProducts value)?  loadFavoriteProducts,TResult? Function( RemoveFavorite value)?  removeFavorite,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( LoadFavoriteProducts value)?  loadFavoriteProducts,TResult? Function( RemoveFavorite value)?  removeFavorite,TResult? Function( SearchProducts value)?  searchProducts,}){
 final _that = this;
 switch (_that) {
 case LoadFavoriteProducts() when loadFavoriteProducts != null:
 return loadFavoriteProducts(_that);case RemoveFavorite() when removeFavorite != null:
-return removeFavorite(_that);case _:
+return removeFavorite(_that);case SearchProducts() when searchProducts != null:
+return searchProducts(_that);case _:
   return null;
 
 }
@@ -122,11 +125,12 @@ return removeFavorite(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loadFavoriteProducts,TResult Function( String productId)?  removeFavorite,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loadFavoriteProducts,TResult Function( String productId)?  removeFavorite,TResult Function( String query)?  searchProducts,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case LoadFavoriteProducts() when loadFavoriteProducts != null:
 return loadFavoriteProducts();case RemoveFavorite() when removeFavorite != null:
-return removeFavorite(_that.productId);case _:
+return removeFavorite(_that.productId);case SearchProducts() when searchProducts != null:
+return searchProducts(_that.query);case _:
   return orElse();
 
 }
@@ -144,11 +148,12 @@ return removeFavorite(_that.productId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loadFavoriteProducts,required TResult Function( String productId)  removeFavorite,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loadFavoriteProducts,required TResult Function( String productId)  removeFavorite,required TResult Function( String query)  searchProducts,}) {final _that = this;
 switch (_that) {
 case LoadFavoriteProducts():
 return loadFavoriteProducts();case RemoveFavorite():
-return removeFavorite(_that.productId);case _:
+return removeFavorite(_that.productId);case SearchProducts():
+return searchProducts(_that.query);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -165,11 +170,12 @@ return removeFavorite(_that.productId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loadFavoriteProducts,TResult? Function( String productId)?  removeFavorite,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loadFavoriteProducts,TResult? Function( String productId)?  removeFavorite,TResult? Function( String query)?  searchProducts,}) {final _that = this;
 switch (_that) {
 case LoadFavoriteProducts() when loadFavoriteProducts != null:
 return loadFavoriteProducts();case RemoveFavorite() when removeFavorite != null:
-return removeFavorite(_that.productId);case _:
+return removeFavorite(_that.productId);case SearchProducts() when searchProducts != null:
+return searchProducts(_that.query);case _:
   return null;
 
 }
@@ -268,6 +274,72 @@ class _$RemoveFavoriteCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') $Res call({Object? productId = null,}) {
   return _then(RemoveFavorite(
 null == productId ? _self.productId : productId // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class SearchProducts implements FavoritesEvent {
+  const SearchProducts(this.query);
+  
+
+ final  String query;
+
+/// Create a copy of FavoritesEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$SearchProductsCopyWith<SearchProducts> get copyWith => _$SearchProductsCopyWithImpl<SearchProducts>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SearchProducts&&(identical(other.query, query) || other.query == query));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,query);
+
+@override
+String toString() {
+  return 'FavoritesEvent.searchProducts(query: $query)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $SearchProductsCopyWith<$Res> implements $FavoritesEventCopyWith<$Res> {
+  factory $SearchProductsCopyWith(SearchProducts value, $Res Function(SearchProducts) _then) = _$SearchProductsCopyWithImpl;
+@useResult
+$Res call({
+ String query
+});
+
+
+
+
+}
+/// @nodoc
+class _$SearchProductsCopyWithImpl<$Res>
+    implements $SearchProductsCopyWith<$Res> {
+  _$SearchProductsCopyWithImpl(this._self, this._then);
+
+  final SearchProducts _self;
+  final $Res Function(SearchProducts) _then;
+
+/// Create a copy of FavoritesEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? query = null,}) {
+  return _then(SearchProducts(
+null == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -392,12 +464,12 @@ return failure(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( List<ProductModel> products)?  loaded,TResult Function( String message)?  failure,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( List<ProductModel> products,  String searchQuery,  List<ProductModel> allProducts)?  loaded,TResult Function( String message)?  failure,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case Initial() when initial != null:
 return initial();case Loading() when loading != null:
 return loading();case Loaded() when loaded != null:
-return loaded(_that.products);case Failure() when failure != null:
+return loaded(_that.products,_that.searchQuery,_that.allProducts);case Failure() when failure != null:
 return failure(_that.message);case _:
   return orElse();
 
@@ -416,12 +488,12 @@ return failure(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( List<ProductModel> products)  loaded,required TResult Function( String message)  failure,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( List<ProductModel> products,  String searchQuery,  List<ProductModel> allProducts)  loaded,required TResult Function( String message)  failure,}) {final _that = this;
 switch (_that) {
 case Initial():
 return initial();case Loading():
 return loading();case Loaded():
-return loaded(_that.products);case Failure():
+return loaded(_that.products,_that.searchQuery,_that.allProducts);case Failure():
 return failure(_that.message);case _:
   throw StateError('Unexpected subclass');
 
@@ -439,12 +511,12 @@ return failure(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( List<ProductModel> products)?  loaded,TResult? Function( String message)?  failure,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( List<ProductModel> products,  String searchQuery,  List<ProductModel> allProducts)?  loaded,TResult? Function( String message)?  failure,}) {final _that = this;
 switch (_that) {
 case Initial() when initial != null:
 return initial();case Loading() when loading != null:
 return loading();case Loaded() when loaded != null:
-return loaded(_that.products);case Failure() when failure != null:
+return loaded(_that.products,_that.searchQuery,_that.allProducts);case Failure() when failure != null:
 return failure(_that.message);case _:
   return null;
 
@@ -521,7 +593,7 @@ String toString() {
 
 
 class Loaded implements FavoritesState {
-  const Loaded(final  List<ProductModel> products): _products = products;
+  const Loaded(final  List<ProductModel> products, {this.searchQuery = '', final  List<ProductModel> allProducts = const []}): _products = products,_allProducts = allProducts;
   
 
  final  List<ProductModel> _products;
@@ -529,6 +601,14 @@ class Loaded implements FavoritesState {
   if (_products is EqualUnmodifiableListView) return _products;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_products);
+}
+
+@JsonKey() final  String searchQuery;
+ final  List<ProductModel> _allProducts;
+@JsonKey() List<ProductModel> get allProducts {
+  if (_allProducts is EqualUnmodifiableListView) return _allProducts;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_allProducts);
 }
 
 
@@ -542,16 +622,16 @@ $LoadedCopyWith<Loaded> get copyWith => _$LoadedCopyWithImpl<Loaded>(this, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Loaded&&const DeepCollectionEquality().equals(other._products, _products));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Loaded&&const DeepCollectionEquality().equals(other._products, _products)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&const DeepCollectionEquality().equals(other._allProducts, _allProducts));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_products));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_products),searchQuery,const DeepCollectionEquality().hash(_allProducts));
 
 @override
 String toString() {
-  return 'FavoritesState.loaded(products: $products)';
+  return 'FavoritesState.loaded(products: $products, searchQuery: $searchQuery, allProducts: $allProducts)';
 }
 
 
@@ -562,7 +642,7 @@ abstract mixin class $LoadedCopyWith<$Res> implements $FavoritesStateCopyWith<$R
   factory $LoadedCopyWith(Loaded value, $Res Function(Loaded) _then) = _$LoadedCopyWithImpl;
 @useResult
 $Res call({
- List<ProductModel> products
+ List<ProductModel> products, String searchQuery, List<ProductModel> allProducts
 });
 
 
@@ -579,9 +659,11 @@ class _$LoadedCopyWithImpl<$Res>
 
 /// Create a copy of FavoritesState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? products = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? products = null,Object? searchQuery = null,Object? allProducts = null,}) {
   return _then(Loaded(
 null == products ? _self._products : products // ignore: cast_nullable_to_non_nullable
+as List<ProductModel>,searchQuery: null == searchQuery ? _self.searchQuery : searchQuery // ignore: cast_nullable_to_non_nullable
+as String,allProducts: null == allProducts ? _self._allProducts : allProducts // ignore: cast_nullable_to_non_nullable
 as List<ProductModel>,
   ));
 }

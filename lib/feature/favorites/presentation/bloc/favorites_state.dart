@@ -4,7 +4,11 @@ part of 'favorites_bloc.dart';
 class FavoritesState with _$FavoritesState {
   const factory FavoritesState.initial() = Initial;
   const factory FavoritesState.loading() = Loading;
-  const factory FavoritesState.loaded(List<ProductModel> products) = Loaded;
+  const factory FavoritesState.loaded(
+    List<ProductModel> products, {
+    @Default('') String searchQuery,
+    @Default([]) List<ProductModel> allProducts,
+  }) = Loaded;
   const factory FavoritesState.failure(String message) = Failure;
 }
 

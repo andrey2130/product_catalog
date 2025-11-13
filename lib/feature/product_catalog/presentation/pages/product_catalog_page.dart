@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:catalog_product/feature/product_catalog/presentation/widgets/custom_button.dart';
+import 'package:catalog_product/feature/product_catalog/presentation/widgets/product_list_item.dart';
+import 'package:catalog_product/feature/product_catalog/presentation/widgets/product_search_field.dart';
 import 'package:catalog_product/feature/product_catalog/presentation/bloc/product_bloc.dart';
 
 class ProductCatalogPage extends StatefulWidget {
@@ -71,33 +73,9 @@ class _ProductCatalogPageState extends State<ProductCatalogPage> {
                         preferredSize: const Size.fromHeight(70),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: TextField(
+                          child: ProductSearchField(
                             controller: _searchController,
-                            decoration: InputDecoration(
-                              hintText: 'Пошук продуктів...',
-                              prefixIcon: const Icon(Icons.search),
-                              suffixIcon: searchQuery.isNotEmpty
-                                  ? IconButton(
-                                      icon: const Icon(Icons.clear),
-                                      onPressed: () {
-                                        _searchController.clear();
-                                        context.read<ProductBloc>().add(
-                                          ProductEvent.searchProducts(''),
-                                        );
-                                      },
-                                    )
-                                  : null,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              filled: true,
-                              fillColor: Theme.of(context).cardColor,
-                            ),
-                            onChanged: (value) {
-                              context.read<ProductBloc>().add(
-                                ProductEvent.searchProducts(value),
-                              );
-                            },
+                            searchQuery: searchQuery,
                           ),
                         ),
                       ),
@@ -130,20 +108,7 @@ class _ProductCatalogPageState extends State<ProductCatalogPage> {
                         itemCount: products.length,
                         itemBuilder: (context, index) {
                           final product = products[index];
-                          return ListTile(
-                            leading: CircleAvatar(
-                              backgroundImage: NetworkImage(product.imageUrl),
-                            ),
-                            title: Text(product.productName),
-                            subtitle: Text(product.description),
-                            trailing: Text(
-                              "₴${product.price.toStringAsFixed(2)}",
-                            ),
-                            onTap: () => context.push(
-                              "/product_details",
-                              extra: product,
-                            ),
-                          );
+                          return ProductListItem(product: product);
                         },
                         separatorBuilder: (context, index) =>
                             Divider(height: 1),

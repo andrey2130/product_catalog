@@ -13,19 +13,19 @@ final List<ProductModel> mockProducts = [
     inCart: false,
     quantity: 1,
   ),
-  ProductModel(
-    productId: '2',
-    productName: 'Xbox Series X (1TB)',
-    description:
-        'Потужна ігрова консоль від Microsoft із підтримкою Game Pass і твердотільним накопичувачем 1ТБ.',
-        // Картинка з неправильним адресом для того щоб попабчити як програма обробляє таку помилку
-    imageUrl:
-        'https://gfx3.senetic.com/akeneo-catalog/4/9/7/8/4978247b1f8221766f2fe85abbd88e7720179a4_1652545_RRT_00010_image1.jpg',
-    price: 34999,
-    isFavorite: false,
-    inCart: false,
-    quantity: 1,
-  ),
+  // ProductModel(
+  //   productId: '2',
+  //   productName: 'Xbox Series X (1TB)',
+  //   description:
+  //       'Потужна ігрова консоль від Microsoft із підтримкою Game Pass і твердотільним накопичувачем 1ТБ.',
+  //       // Картинка з неправильним адресом для того щоб попабчити як програма обробляє таку помилку
+  //   imageUrl:
+  //       'https://gfx3.senetic.com/akeneo-catalog/4/9/7/8/4978247b1f8221766f2fe85abbd88e7720179a4_1652545_RRT_00010_image1.jpg',
+  //   price: 34999,
+  //   isFavorite: false,
+  //   inCart: false,
+  //   quantity: 1,
+  // ),
   ProductModel(
     productId: '3',
     productName: 'Nintendo Switch OLED (64GB)',

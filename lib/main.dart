@@ -1,3 +1,4 @@
+import 'package:catalog_product/core/theme/cubit/theme_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:catalog_product/core/app_route/app_route.dart';
@@ -23,11 +24,25 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => getIt<ProductBloc>()),
         BlocProvider(create: (context) => getIt<CartBloc>()),
         BlocProvider(create: (context) => getIt<FavoritesBloc>()),
+        BlocProvider(create: (context) => getIt<ThemeCubit>()),
       ],
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        theme: AppThemes.darkTheme(),
-        routerConfig: appRoutes,
+      child: BlocBuilder<ThemeCubit, ThemeState>(
+        builder: (context, themeState) {
+          return GestureDetector(
+            onTap: () {
+              FocusManager.instance.primaryFocus?.unfocus();
+            },
+            behavior: HitTestBehavior.opaque,
+            child: MaterialApp.router(
+              debugShowCheckedModeBanner: false,
+              theme: themeState.when(
+                light: () => AppThemes.lightTheme(),
+                dark: () => AppThemes.darkTheme(),
+              ),
+              routerConfig: appRoutes,
+            ),
+          );
+        },
       ),
     );
   }

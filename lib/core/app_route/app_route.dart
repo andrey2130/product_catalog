@@ -1,4 +1,5 @@
 import 'package:catalog_product/data/models/product_model.dart';
+import 'package:catalog_product/feature/browser/presentation/pages/mini_browser.dart';
 import 'package:catalog_product/feature/cart/presentation/pages/cart_page.dart';
 import 'package:catalog_product/feature/favorites/presentation/pages/favorites_page.dart';
 import 'package:catalog_product/feature/product_catalog/presentation/pages/product_catalog_page.dart';
@@ -24,5 +25,6 @@ final appRoutes = GoRouter(
     ),
     GoRoute(path: "/basket", builder: (context, state) => CartPage()),
     GoRoute(path: "/favorites", builder: (context, state) => const FavoritesPage()),
+    GoRoute(path: "/browser", builder: (context, state) => const MiniBrowser()),
   ],
 );

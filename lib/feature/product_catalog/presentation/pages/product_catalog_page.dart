@@ -1,3 +1,4 @@
+import 'package:catalog_product/core/theme/cubit/theme_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -43,14 +44,26 @@ class _ProductCatalogPageState extends State<ProductCatalogPage> {
 
               loaded: (products, searchQuery, allProducts) {
                 return CustomScrollView(
+                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+
                   slivers: [
                     SliverAppBar(
+                      leading: IconButton(onPressed: () => context.push("/browser"), icon: Icon(Icons.public)),
                       title: Text("Каталог продуктів"),
                       actions: [
+                         
+                        IconButton(
+                          onPressed: () => context.read<ThemeCubit>().toggleTheme(),
+                          icon: Icon(context.read<ThemeCubit>().state.when(
+                            light: () => Icons.dark_mode,
+                            dark: () => Icons.light_mode,
+                          )),
+                        ),
                         IconButton(
                           onPressed: () => context.push("/favorites"),
                           icon: Icon(Icons.favorite_border),
                         ),
+                       
                       ],
                       floating: true,
                       pinned: true,

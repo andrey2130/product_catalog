@@ -13,6 +13,7 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
 import 'core/storage/storage_service.dart' as _i263;
+import 'core/theme/cubit/theme_cubit.dart' as _i577;
 import 'feature/cart/data/datasource/cart_datasource.dart' as _i591;
 import 'feature/cart/data/repository/cart_repository_impl.dart' as _i122;
 import 'feature/cart/domain/repository/cart_repository.dart' as _i350;
@@ -50,6 +51,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i263.StorageService>(() => _i263.StorageService());
     gh.factory<_i513.ProductCatalogDatasource>(
       () => _i513.ProductCatalogDatasourceImpl(gh<_i263.StorageService>()),
+    );
+    gh.lazySingleton<_i577.ThemeCubit>(
+      () => _i577.ThemeCubit(gh<_i263.StorageService>()),
     );
     gh.factory<_i591.CartDatasource>(
       () => _i591.CartDatasourceImpl(gh<_i513.ProductCatalogDatasource>()),

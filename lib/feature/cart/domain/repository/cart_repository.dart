@@ -5,4 +5,5 @@ import 'package:catalog_product/core/failure/app_failure.dart';
 
 abstract class CartRepository {
   Future<Either<AppFailure, List<ProductModel>>> getCartProducts();
+  Future<Either<AppFailure, void>> clearCart();
 }

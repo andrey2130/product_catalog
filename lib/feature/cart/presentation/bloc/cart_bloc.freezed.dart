@@ -55,14 +55,15 @@ extension CartEventPatterns on CartEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( LoadCartProducts value)?  loadCartProducts,TResult Function( IncreaseQuantity value)?  increaseQuantity,TResult Function( DecreaseQuantity value)?  decreaseQuantity,TResult Function( RemoveProduct value)?  removeProduct,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( LoadCartProducts value)?  loadCartProducts,TResult Function( IncreaseQuantity value)?  increaseQuantity,TResult Function( DecreaseQuantity value)?  decreaseQuantity,TResult Function( RemoveProduct value)?  removeProduct,TResult Function( ClearCart value)?  clearCart,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case LoadCartProducts() when loadCartProducts != null:
 return loadCartProducts(_that);case IncreaseQuantity() when increaseQuantity != null:
 return increaseQuantity(_that);case DecreaseQuantity() when decreaseQuantity != null:
 return decreaseQuantity(_that);case RemoveProduct() when removeProduct != null:
-return removeProduct(_that);case _:
+return removeProduct(_that);case ClearCart() when clearCart != null:
+return clearCart(_that);case _:
   return orElse();
 
 }
@@ -80,14 +81,15 @@ return removeProduct(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( LoadCartProducts value)  loadCartProducts,required TResult Function( IncreaseQuantity value)  increaseQuantity,required TResult Function( DecreaseQuantity value)  decreaseQuantity,required TResult Function( RemoveProduct value)  removeProduct,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( LoadCartProducts value)  loadCartProducts,required TResult Function( IncreaseQuantity value)  increaseQuantity,required TResult Function( DecreaseQuantity value)  decreaseQuantity,required TResult Function( RemoveProduct value)  removeProduct,required TResult Function( ClearCart value)  clearCart,}){
 final _that = this;
 switch (_that) {
 case LoadCartProducts():
 return loadCartProducts(_that);case IncreaseQuantity():
 return increaseQuantity(_that);case DecreaseQuantity():
 return decreaseQuantity(_that);case RemoveProduct():
-return removeProduct(_that);case _:
+return removeProduct(_that);case ClearCart():
+return clearCart(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -104,14 +106,15 @@ return removeProduct(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( LoadCartProducts value)?  loadCartProducts,TResult? Function( IncreaseQuantity value)?  increaseQuantity,TResult? Function( DecreaseQuantity value)?  decreaseQuantity,TResult? Function( RemoveProduct value)?  removeProduct,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( LoadCartProducts value)?  loadCartProducts,TResult? Function( IncreaseQuantity value)?  increaseQuantity,TResult? Function( DecreaseQuantity value)?  decreaseQuantity,TResult? Function( RemoveProduct value)?  removeProduct,TResult? Function( ClearCart value)?  clearCart,}){
 final _that = this;
 switch (_that) {
 case LoadCartProducts() when loadCartProducts != null:
 return loadCartProducts(_that);case IncreaseQuantity() when increaseQuantity != null:
 return increaseQuantity(_that);case DecreaseQuantity() when decreaseQuantity != null:
 return decreaseQuantity(_that);case RemoveProduct() when removeProduct != null:
-return removeProduct(_that);case _:
+return removeProduct(_that);case ClearCart() when clearCart != null:
+return clearCart(_that);case _:
   return null;
 
 }
@@ -128,13 +131,14 @@ return removeProduct(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loadCartProducts,TResult Function( String productId)?  increaseQuantity,TResult Function( String productId)?  decreaseQuantity,TResult Function( String productId)?  removeProduct,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loadCartProducts,TResult Function( String productId)?  increaseQuantity,TResult Function( String productId)?  decreaseQuantity,TResult Function( String productId)?  removeProduct,TResult Function()?  clearCart,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case LoadCartProducts() when loadCartProducts != null:
 return loadCartProducts();case IncreaseQuantity() when increaseQuantity != null:
 return increaseQuantity(_that.productId);case DecreaseQuantity() when decreaseQuantity != null:
 return decreaseQuantity(_that.productId);case RemoveProduct() when removeProduct != null:
-return removeProduct(_that.productId);case _:
+return removeProduct(_that.productId);case ClearCart() when clearCart != null:
+return clearCart();case _:
   return orElse();
 
 }
@@ -152,13 +156,14 @@ return removeProduct(_that.productId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loadCartProducts,required TResult Function( String productId)  increaseQuantity,required TResult Function( String productId)  decreaseQuantity,required TResult Function( String productId)  removeProduct,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loadCartProducts,required TResult Function( String productId)  increaseQuantity,required TResult Function( String productId)  decreaseQuantity,required TResult Function( String productId)  removeProduct,required TResult Function()  clearCart,}) {final _that = this;
 switch (_that) {
 case LoadCartProducts():
 return loadCartProducts();case IncreaseQuantity():
 return increaseQuantity(_that.productId);case DecreaseQuantity():
 return decreaseQuantity(_that.productId);case RemoveProduct():
-return removeProduct(_that.productId);case _:
+return removeProduct(_that.productId);case ClearCart():
+return clearCart();case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -175,13 +180,14 @@ return removeProduct(_that.productId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loadCartProducts,TResult? Function( String productId)?  increaseQuantity,TResult? Function( String productId)?  decreaseQuantity,TResult? Function( String productId)?  removeProduct,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loadCartProducts,TResult? Function( String productId)?  increaseQuantity,TResult? Function( String productId)?  decreaseQuantity,TResult? Function( String productId)?  removeProduct,TResult? Function()?  clearCart,}) {final _that = this;
 switch (_that) {
 case LoadCartProducts() when loadCartProducts != null:
 return loadCartProducts();case IncreaseQuantity() when increaseQuantity != null:
 return increaseQuantity(_that.productId);case DecreaseQuantity() when decreaseQuantity != null:
 return decreaseQuantity(_that.productId);case RemoveProduct() when removeProduct != null:
-return removeProduct(_that.productId);case _:
+return removeProduct(_that.productId);case ClearCart() when clearCart != null:
+return clearCart();case _:
   return null;
 
 }
@@ -418,6 +424,38 @@ as String,
 
 
 }
+
+/// @nodoc
+
+
+class ClearCart implements CartEvent {
+  const ClearCart();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ClearCart);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'CartEvent.clearCart()';
+}
+
+
+}
+
+
+
 
 /// @nodoc
 mixin _$CartState {

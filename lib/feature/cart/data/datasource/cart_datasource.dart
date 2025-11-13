@@ -6,6 +6,7 @@ import 'package:injectable/injectable.dart';
 
 abstract class CartDatasource {
   Future<List<ProductModel>> getCartProduct();
+  Future<void> clearCart();
 }
 
 @Injectable(as: CartDatasource)
@@ -25,6 +26,15 @@ class CartDatasourceImpl implements CartDatasource {
     } catch (e, st) {
       log("Помилка отримання продуктів у кошику: $e\n$st");
       return [];
+    }
+  }
+
+  @override
+  Future<void> clearCart() async {
+    try {
+      await _productCatalogDatasource.clearCart();
+    } catch (e, st) {
+      log("Помилка очищення кошику: $e\n$st");
     }
   }
 }

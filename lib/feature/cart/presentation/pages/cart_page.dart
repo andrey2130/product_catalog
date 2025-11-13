@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:catalog_product/feature/cart/presentation/bloc/cart_bloc.dart';
 import 'package:catalog_product/core/widgets/empty_state_widget.dart';
 import 'package:catalog_product/feature/product_catalog/presentation/widgets/custom_button.dart';
+import 'package:go_router/go_router.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -28,6 +29,21 @@ class _CartPageState extends State<CartPage> {
         centerTitle: true,
         elevation: 0,
         backgroundColor: Theme.of(context).colorScheme.surface,
+        actions: [
+          IconButton(
+            onPressed: () =>  showDialog(context: context, builder: (context) => AlertDialog.adaptive(
+              title: Text("Ви впевнені, що хочете очистити кошик?"),
+              actions: [
+                TextButton(onPressed: () => context.pop(), child: Text("Ні")),
+                TextButton(onPressed: () {
+                  context.read<CartBloc>().add(const CartEvent.clearCart());
+                  context.pop();
+                }, child: Text("Так")),
+              ],
+            )),
+            icon: Icon(Icons.delete),
+          ),
+        ],
       ),
       body: SafeArea(
         child: BlocBuilder<CartBloc, CartState>(

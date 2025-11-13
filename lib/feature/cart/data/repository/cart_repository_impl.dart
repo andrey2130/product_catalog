@@ -20,4 +20,14 @@ class CartRepositoryImpl implements CartRepository {
       return Left(AppFailure(message: e.toString()));
     }
   }
+
+  @override
+  Future<Either<AppFailure, void>> clearCart() async {
+    try {
+      await _cartDatasource.clearCart();
+      return Right(null);
+    } catch (e) {
+      return Left(AppFailure(message: e.toString()));
+    }
+  }
 }

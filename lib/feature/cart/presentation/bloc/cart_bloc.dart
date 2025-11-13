@@ -25,6 +25,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<IncreaseQuantity>(_increaseQuantity);
     on<DecreaseQuantity>(_decreaseQuantity);
     on<RemoveProduct>(_removeProduct);
+    on<ClearCart>(_clearCart);
   }
 
   double _calculateTotal(List<ProductModel> products) {
@@ -137,6 +138,32 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       (products) {
         final total = _calculateTotal(products);
         emit(CartState.loaded(products, total));
+      },
+    );
+  }
+
+  Future<void> _clearCart(
+    ClearCart event,
+    Emitter<CartState> emit,
+  ) async {
+    emit(const CartState.loading());
+
+    final result = await _cartRepository.clearCart();
+    
+    await result.fold(
+      (failure) async {
+        emit(CartState.failure(failure.message));
+      },
+      (_) async {
+        // Reload cart products to get updated state (will be empty)
+        final reloadResult = await _cartRepository.getCartProducts();
+        reloadResult.fold(
+          (failure) => emit(CartState.failure(failure.message)),
+          (products) {
+            final total = _calculateTotal(products);
+            emit(CartState.loaded(products, total));
+          },
+        );
       },
     );
   }

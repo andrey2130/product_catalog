@@ -117,6 +117,11 @@ class StorageService {
     await saveCartQuantities(quantities);
   }
 
+  Future<void> clearCart() async {
+    final prefs = await _prefs;
+    await prefs.remove(_cartKey);
+    await prefs.remove(_cartQuantitiesKey);
+  }
 
   // Theme
   Future<void> setThemeMode(ThemeState themeMode) async {

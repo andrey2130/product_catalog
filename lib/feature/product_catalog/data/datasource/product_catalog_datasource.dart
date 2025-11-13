@@ -11,6 +11,7 @@ abstract class ProductCatalogDatasource {
   Future<ProductModel> addToBasket(String productId, {int quantity = 1});
   Future<ProductModel> removeFromBasket(String productId);
   Future<ProductModel> updateBasketQuantity(String productId, int quantity);
+  Future<void> clearCart();
 }
 
 @Injectable(as: ProductCatalogDatasource)
@@ -153,6 +154,19 @@ class ProductCatalogDatasourceImpl implements ProductCatalogDatasource {
     } catch (e, stackTrace) {
       log(
         'Помилка оновлення кількості товару в кошику $productId: ${e.toString()}',
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> clearCart() async {
+    try {
+      await _storageService.clearCart();
+    } catch (e, stackTrace) {
+      log(
+        'Помилка очищення кошика: ${e.toString()}',
         stackTrace: stackTrace,
       );
       rethrow;

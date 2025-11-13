@@ -73,7 +73,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     final currentState = state;
 
     if (currentState is Loaded) {
-      // Optimistically update the UI
       final updatedProducts = currentState.products.map((product) {
         if (product.productId == event.productId) {
           return product.copyWith(isFavorite: !product.isFavorite);
@@ -88,12 +87,11 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         ),
       );
 
-      // Call the usecase to persist the change
       final result = await _toggleFavoriteUsecase(event.productId);
 
       result.fold(
         (failure) {
-          // Revert on failure
+
           emit(
             ProductState.loaded(
               currentState.products,
@@ -103,7 +101,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
           emit(ProductState.failure(failure.message));
         },
         (updatedProduct) {
-          // Update with the actual result from the server
           final finalProducts = currentState.products.map((product) {
             if (product.productId == event.productId) {
               return updatedProduct;
@@ -128,7 +125,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     final currentState = state;
 
     if (currentState is Loaded) {
-      // Optimistically update the UI
       final updatedProducts = currentState.products.map((product) {
         if (product.productId == event.productId) {
           return product.copyWith(
@@ -146,7 +142,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         ),
       );
 
-      // Call the usecase to persist the change
       final result = await _addToCartUsecase(
         AddToBasketParams(
           productId: event.productId,
@@ -156,7 +151,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
       result.fold(
         (failure) {
-          // Revert on failure
           emit(
             ProductState.loaded(
               currentState.products,
@@ -166,7 +160,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
           emit(ProductState.failure(failure.message));
         },
         (updatedProduct) {
-          // Update with the actual result from the server
           final finalProducts = currentState.products.map((product) {
             if (product.productId == event.productId) {
               return updatedProduct;

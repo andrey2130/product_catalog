@@ -14,8 +14,44 @@ class CartRepositoryImpl implements CartRepository {
   @override
   Future<Either<AppFailure, List<ProductModel>>> getCartProducts() async {
     try {
-      final products = await _cartDatasource.getCartProduct();
+      final products = await _cartDatasource.getCartProducts();
       return Right(products);
+    } catch (e) {
+      return Left(AppFailure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<AppFailure, ProductModel>> addToCart(
+    String productId, {
+    int quantity = 1,
+  }) async {
+    try {
+      final product = await _cartDatasource.addToCart(productId, quantity: quantity);
+      return Right(product);
+    } catch (e) {
+      return Left(AppFailure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<AppFailure, ProductModel>> removeFromCart(String productId) async {
+    try {
+      final product = await _cartDatasource.removeFromCart(productId);
+      return Right(product);
+    } catch (e) {
+      return Left(AppFailure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<AppFailure, ProductModel>> updateCartQuantity(
+    String productId,
+    int quantity,
+  ) async {
+    try {
+      final product = await _cartDatasource.updateCartQuantity(productId, quantity);
+      return Right(product);
     } catch (e) {
       return Left(AppFailure(message: e.toString()));
     }

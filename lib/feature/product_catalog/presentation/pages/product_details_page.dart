@@ -2,8 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:catalog_product/data/models/product_model.dart';
-import 'package:catalog_product/feature/product_catalog/presentation/bloc/product_bloc.dart';
+import 'package:catalog_product/feature/product_catalog/presentation/bloc/product_bloc.dart' as product_bloc;
 import 'package:catalog_product/feature/product_catalog/presentation/widgets/custom_button.dart';
+import 'package:catalog_product/feature/cart/presentation/bloc/cart_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class ProductDetailsPage extends StatelessWidget {
@@ -12,18 +13,36 @@ class ProductDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProductBloc, ProductState>(
-      builder: (context, state) {
-        ProductModel currentProduct = product;
-        if (state is Loaded) {
-          final updatedProduct = state.products.firstWhere(
-            (p) => p.productId == product.productId,
-            orElse: () => product,
+    return BlocListener<product_bloc.ProductBloc, product_bloc.ProductState>(
+      listener: (context, state) {
+        state.maybeWhen(
+          loaded: (products, searchQuery, allProducts) {
+            final updatedProduct = products.firstWhere(
+              (p) => p.productId == product.productId,
+              orElse: () => product,
+            );
+            if (updatedProduct.inCart != product.inCart && updatedProduct.inCart) {
+              context.read<CartBloc>().add(const CartEvent.loadCartProducts());
+            }
+          },
+          orElse: () {},
+        );
+      },
+      child: BlocBuilder<product_bloc.ProductBloc, product_bloc.ProductState>(
+        builder: (context, state) {
+          ProductModel currentProduct = product;
+          state.maybeWhen(
+            loaded: (products, searchQuery, allProducts) {
+              final updatedProduct = products.firstWhere(
+                (p) => p.productId == product.productId,
+                orElse: () => product,
+              );
+              currentProduct = updatedProduct;
+            },
+            orElse: () {},
           );
-          currentProduct = updatedProduct;
-        }
 
-        return Scaffold(
+          return Scaffold(
           body: SafeArea(
             top: false,
             child: CustomScrollView(
@@ -36,7 +55,8 @@ class ProductDetailsPage extends StatelessWidget {
             ),
           ),
         );
-      },
+        },
+      ),
     );
   }
 
@@ -133,8 +153,8 @@ class ProductDetailsPage extends StatelessWidget {
                   ),
                   child: IconButton(
                     onPressed: () {
-                      context.read<ProductBloc>().add(
-                            ProductEvent.toggleFavorite(product.productId),
+                      context.read<product_bloc.ProductBloc>().add(
+                            product_bloc.ProductEvent.toggleFavorite(product.productId),
                           );
                     },
                     icon: Icon(
@@ -276,8 +296,8 @@ class ProductDetailsPage extends StatelessWidget {
           onPressed: product.inCart
               ? () {}
               : () {
-                  context.read<ProductBloc>().add(
-                        ProductEvent.addToBasket(product.productId),
+                  context.read<product_bloc.ProductBloc>().add(
+                        product_bloc.ProductEvent.addToBasket(product.productId),
                       );
                 },
         ),

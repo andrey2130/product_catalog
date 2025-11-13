@@ -2,7 +2,7 @@ import 'package:catalog_product/feature/cart/presentation/widgets/cart_product_c
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:catalog_product/feature/cart/presentation/bloc/cart_bloc.dart';
-
+import 'package:catalog_product/core/widgets/empty_state_widget.dart';
 import 'package:catalog_product/feature/product_catalog/presentation/widgets/custom_button.dart';
 
 class CartPage extends StatefulWidget {
@@ -37,26 +37,9 @@ class _CartPageState extends State<CartPage> {
                   const Center(child: CircularProgressIndicator.adaptive()),
               loaded: (products, total) {
                 if (products.isEmpty) {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.shopping_bag_outlined,
-                          size: 80,
-                          color: Colors.grey[400],
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          "Кошик порожній",
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.grey[600],
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
+                  return const EmptyStateWidget(
+                    icon: Icons.shopping_bag_outlined,
+                    message: "Кошик порожній",
                   );
                 }
 

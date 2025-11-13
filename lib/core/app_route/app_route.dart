@@ -1,5 +1,5 @@
 import 'package:catalog_product/data/models/product_model.dart';
-import 'package:catalog_product/feature/cart/presentation/pages/basket_page.dart';
+import 'package:catalog_product/feature/cart/presentation/pages/cart_page.dart';
 import 'package:catalog_product/feature/favorites/presentation/pages/favorites_page.dart';
 import 'package:catalog_product/feature/product_catalog/presentation/pages/product_catalog_page.dart';
 import 'package:catalog_product/feature/product_catalog/presentation/pages/product_details_page.dart';

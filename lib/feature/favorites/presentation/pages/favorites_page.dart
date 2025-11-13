@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:catalog_product/feature/favorites/presentation/bloc/favorites_bloc.dart';
 import 'package:catalog_product/feature/favorites/presentation/widgets/favorite_product_card.dart';
+import 'package:catalog_product/core/widgets/empty_state_widget.dart';
 import 'package:catalog_product/feature/product_catalog/presentation/widgets/custom_button.dart';
 
 class FavoritesPage extends StatefulWidget {
@@ -36,26 +37,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
                   const Center(child: CircularProgressIndicator.adaptive()),
               loaded: (products) {
                 if (products.isEmpty) {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.favorite_border,
-                          size: 80,
-                          color: Colors.grey[400],
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          "Список улюблених порожній",
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.grey[600],
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
+                  return const EmptyStateWidget(
+                    icon: Icons.favorite_border,
+                    message: "Список улюблених порожній",
                   );
                 }
 

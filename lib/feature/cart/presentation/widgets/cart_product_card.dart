@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:catalog_product/feature/cart/presentation/bloc/cart_bloc.dart';
 import 'package:catalog_product/feature/cart/presentation/widgets/cart_quantity_button.dart';
 import 'package:catalog_product/data/models/product_model.dart';
+import 'package:catalog_product/core/widgets/product_image_widget.dart';
+import 'package:catalog_product/core/widgets/product_info_section.dart';
+import 'package:catalog_product/core/widgets/circular_action_button.dart';
 
 class CartProductCard extends StatelessWidget {
   final ProductModel product;
@@ -19,76 +22,26 @@ class CartProductCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.network(
-                product.imageUrl,
-                width: 80,
-                height: 80,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    width: 80,
-                    height: 80,
-                    color: Colors.grey[300],
-                    child: const Icon(
-                      Icons.image_not_supported,
-                      color: Colors.grey,
-                    ),
-                  );
-                },
-              ),
-            ),
+            ProductImageWidget(imageUrl: product.imageUrl),
             const SizedBox(width: 16),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    product.productName,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    product.description,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: Colors.grey[600], fontSize: 13),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    "₴${product.price.toStringAsFixed(2)}",
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                ],
+              child: ProductInfoSection(
+                productName: product.productName,
+                description: product.description,
+                price: product.price,
               ),
             ),
             const SizedBox(width: 8),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                GestureDetector(
+                CircularActionButton(
+                  icon: Icons.delete_outline,
                   onTap: () => context.read<CartBloc>().add(
                     CartEvent.removeProduct(product.productId),
                   ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.red.shade50,
-                      shape: BoxShape.circle,
-                    ),
-                    padding: const EdgeInsets.all(6),
-                    child: Icon(
-                      Icons.delete_outline,
-                      color: Colors.red.shade400,
-                    ),
-                  ),
+                  backgroundColor: Colors.red,
+                  iconColor: Colors.red,
                 ),
                 const SizedBox(height: 8),
                 Row(

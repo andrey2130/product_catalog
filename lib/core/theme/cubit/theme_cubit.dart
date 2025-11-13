@@ -21,10 +21,16 @@ class ThemeCubit extends Cubit<ThemeState> {
     });
   }
 
+  Future<void> setTheme(ThemeState theme) async {
+    await _storageService.setThemeMode(theme);
+    emit(theme);
+  }
+
   Future<void> toggleTheme() async {
     final newTheme = state.when(
       light: () => const ThemeState.dark(),
-      dark: () => const ThemeState.light(),
+      dark: () => const ThemeState.system(),
+      system: () => const ThemeState.light(),
     );
 
     await _storageService.setThemeMode(newTheme);

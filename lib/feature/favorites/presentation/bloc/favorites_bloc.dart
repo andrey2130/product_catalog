@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:catalog_product/core/usecases/usecase.dart';
+import 'package:catalog_product/core/usecases/search_products_usecase.dart';
 import 'package:catalog_product/data/models/product_model.dart';
 import 'package:catalog_product/feature/favorites/domain/usecases/get_favorite_products_usecase.dart';
 import 'package:catalog_product/feature/product_catalog/domain/usecase/toggle_favorite_usecase.dart';
@@ -14,10 +15,12 @@ part 'favorites_bloc.freezed.dart';
 class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
   final GetFavoriteProductsUsecase _getFavoriteProductsUsecase;
   final ToggleFavoriteUsecase _toggleFavoriteUsecase;
+  final SearchProductsUsecase _searchProductsUsecase;
 
   FavoritesBloc(
     this._getFavoriteProductsUsecase,
     this._toggleFavoriteUsecase,
+    this._searchProductsUsecase,
   ) : super(const FavoritesState.initial()) {
     on<LoadFavoriteProducts>(_loadFavoriteProducts);
     on<RemoveFavorite>(_removeFavorite);
@@ -76,30 +79,18 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     final currentState = state;
 
     if (currentState is Loaded) {
-      final query = event.query.toLowerCase().trim();
+      final filteredProducts = _searchProductsUsecase(
+        products: currentState.allProducts,
+        query: event.query,
+      );
 
-      if (query.isEmpty) {
-        // Показуємо всі продукти
-        emit(
-          FavoritesState.loaded(
-            currentState.allProducts,
-            searchQuery: '',
-            allProducts: currentState.allProducts,
-          ),
-        );
-      } else {
-        final filteredProducts = currentState.allProducts.where((product) {
-          return product.productName.toLowerCase().contains(query);
-        }).toList();
-
-        emit(
-          FavoritesState.loaded(
-            filteredProducts,
-            searchQuery: query,
-            allProducts: currentState.allProducts,
-          ),
-        );
-      }
+      emit(
+        FavoritesState.loaded(
+          filteredProducts,
+          searchQuery: event.query.trim(),
+          allProducts: currentState.allProducts,
+        ),
+      );
     }
   }
 }

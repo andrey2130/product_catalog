@@ -28,6 +28,12 @@ class MyApp extends StatelessWidget {
       ],
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, themeState) {
+          final themeMode = themeState.when(
+            light: () => ThemeMode.light,
+            dark: () => ThemeMode.dark,
+            system: () => ThemeMode.system,
+          );
+          
           return GestureDetector(
             onTap: () {
               FocusManager.instance.primaryFocus?.unfocus();
@@ -35,10 +41,9 @@ class MyApp extends StatelessWidget {
             behavior: HitTestBehavior.opaque,
             child: MaterialApp.router(
               debugShowCheckedModeBanner: false,
-              theme: themeState.when(
-                light: () => AppThemes.lightTheme(),
-                dark: () => AppThemes.darkTheme(),
-              ),
+              theme: AppThemes.lightTheme(),
+              darkTheme: AppThemes.darkTheme(),
+              themeMode: themeMode,
               routerConfig: appRoutes,
             ),
           );

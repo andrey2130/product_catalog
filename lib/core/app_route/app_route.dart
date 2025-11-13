@@ -4,6 +4,7 @@ import 'package:catalog_product/feature/cart/presentation/pages/cart_page.dart';
 import 'package:catalog_product/feature/favorites/presentation/pages/favorites_page.dart';
 import 'package:catalog_product/feature/product_catalog/presentation/pages/product_catalog_page.dart';
 import 'package:catalog_product/feature/product_catalog/presentation/pages/product_details_page.dart';
+import 'package:catalog_product/feature/settings/presentation/pages/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -26,5 +27,6 @@ final appRoutes = GoRouter(
     GoRoute(path: "/basket", builder: (context, state) => CartPage()),
     GoRoute(path: "/favorites", builder: (context, state) => const FavoritesPage()),
     GoRoute(path: "/browser", builder: (context, state) => const MiniBrowser()),
+    GoRoute(path: "/settings", builder: (context, state) => const SettingsPage()),
   ],
 );

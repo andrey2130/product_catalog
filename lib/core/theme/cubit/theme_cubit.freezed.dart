@@ -55,12 +55,13 @@ extension ThemeStatePatterns on ThemeState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( Light value)?  light,TResult Function( Dark value)?  dark,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( Light value)?  light,TResult Function( Dark value)?  dark,TResult Function( System value)?  system,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case Light() when light != null:
 return light(_that);case Dark() when dark != null:
-return dark(_that);case _:
+return dark(_that);case System() when system != null:
+return system(_that);case _:
   return orElse();
 
 }
@@ -78,12 +79,13 @@ return dark(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( Light value)  light,required TResult Function( Dark value)  dark,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( Light value)  light,required TResult Function( Dark value)  dark,required TResult Function( System value)  system,}){
 final _that = this;
 switch (_that) {
 case Light():
 return light(_that);case Dark():
-return dark(_that);case _:
+return dark(_that);case System():
+return system(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -100,12 +102,13 @@ return dark(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( Light value)?  light,TResult? Function( Dark value)?  dark,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( Light value)?  light,TResult? Function( Dark value)?  dark,TResult? Function( System value)?  system,}){
 final _that = this;
 switch (_that) {
 case Light() when light != null:
 return light(_that);case Dark() when dark != null:
-return dark(_that);case _:
+return dark(_that);case System() when system != null:
+return system(_that);case _:
   return null;
 
 }
@@ -122,11 +125,12 @@ return dark(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  light,TResult Function()?  dark,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  light,TResult Function()?  dark,TResult Function()?  system,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case Light() when light != null:
 return light();case Dark() when dark != null:
-return dark();case _:
+return dark();case System() when system != null:
+return system();case _:
   return orElse();
 
 }
@@ -144,11 +148,12 @@ return dark();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  light,required TResult Function()  dark,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  light,required TResult Function()  dark,required TResult Function()  system,}) {final _that = this;
 switch (_that) {
 case Light():
 return light();case Dark():
-return dark();case _:
+return dark();case System():
+return system();case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -165,11 +170,12 @@ return dark();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  light,TResult? Function()?  dark,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  light,TResult? Function()?  dark,TResult? Function()?  system,}) {final _that = this;
 switch (_that) {
 case Light() when light != null:
 return light();case Dark() when dark != null:
-return dark();case _:
+return dark();case System() when system != null:
+return system();case _:
   return null;
 
 }
@@ -233,6 +239,38 @@ int get hashCode => runtimeType.hashCode;
 @override
 String toString() {
   return 'ThemeState.dark()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class System implements ThemeState {
+  const System();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is System);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'ThemeState.system()';
 }
 
 

@@ -14,6 +14,7 @@ import 'package:injectable/injectable.dart' as _i526;
 
 import 'core/storage/storage_service.dart' as _i263;
 import 'core/theme/cubit/theme_cubit.dart' as _i577;
+import 'core/usecases/search_products_usecase.dart' as _i441;
 import 'feature/cart/data/datasource/cart_datasource.dart' as _i591;
 import 'feature/cart/data/repository/cart_repository_impl.dart' as _i122;
 import 'feature/cart/domain/repository/cart_repository.dart' as _i350;
@@ -49,6 +50,9 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     gh.factory<_i263.StorageService>(() => _i263.StorageService());
+    gh.factory<_i441.SearchProductsUsecase>(
+      () => _i441.SearchProductsUsecase(),
+    );
     gh.factory<_i513.ProductCatalogDatasource>(
       () => _i513.ProductCatalogDatasourceImpl(gh<_i263.StorageService>()),
     );
@@ -85,15 +89,16 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i350.CartRepository>(
       () => _i122.CartRepositoryImpl(gh<_i591.CartDatasource>()),
     );
-    gh.factory<_i682.FavoritesRepository>(
-      () => _i470.FavoritesRepositoryImpl(gh<_i802.FavoritesDatasource>()),
-    );
     gh.factory<_i281.ProductBloc>(
       () => _i281.ProductBloc(
         gh<_i51.GetAllProductUsecase>(),
         gh<_i638.ToggleFavoriteUsecase>(),
         gh<_i601.AddToCartUsecase>(),
+        gh<_i441.SearchProductsUsecase>(),
       ),
+    );
+    gh.factory<_i682.FavoritesRepository>(
+      () => _i470.FavoritesRepositoryImpl(gh<_i802.FavoritesDatasource>()),
     );
     gh.factory<_i199.GetFavoriteProductsUsecase>(
       () => _i199.GetFavoriteProductsUsecase(gh<_i682.FavoritesRepository>()),
@@ -109,6 +114,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i502.FavoritesBloc(
         gh<_i199.GetFavoriteProductsUsecase>(),
         gh<_i638.ToggleFavoriteUsecase>(),
+        gh<_i441.SearchProductsUsecase>(),
       ),
     );
     return this;

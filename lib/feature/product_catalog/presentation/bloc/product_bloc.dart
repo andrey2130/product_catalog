@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:catalog_product/core/usecases/usecase.dart';
+import 'package:catalog_product/core/usecases/search_products_usecase.dart';
 import 'package:catalog_product/data/models/product_model.dart';
 import 'package:catalog_product/feature/product_catalog/domain/usecase/get_all_product_usecase.dart';
 import 'package:catalog_product/feature/product_catalog/domain/usecase/toggle_favorite_usecase.dart';
@@ -16,12 +17,13 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final GetAllProductUsecase _getAllProductUsecase;
   final ToggleFavoriteUsecase _toggleFavoriteUsecase;
   final AddToCartUsecase _addToCartUsecase;
+  final SearchProductsUsecase _searchProductsUsecase;
 
   ProductBloc(
     this._getAllProductUsecase,
-
     this._toggleFavoriteUsecase,
     this._addToCartUsecase,
+    this._searchProductsUsecase,
   ) : super(const ProductState.initial()) {
     on<LoadAllProducts>(_loadAllproducts);
     on<ToggleFavorite>(_toggleFavorite);
@@ -49,30 +51,18 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     final currentState = state;
 
     if (currentState is Loaded) {
-      final query = event.query.toLowerCase().trim();
+      final filteredProducts = _searchProductsUsecase(
+        products: currentState.allProducts,
+        query: event.query,
+      );
 
-      if (query.isEmpty) {
-        // Показуємо всі продукти
-        emit(
-          ProductState.loaded(
-            currentState.allProducts,
-            searchQuery: '',
-            allProducts: currentState.allProducts,
-          ),
-        );
-      } else {
-        final filteredProducts = currentState.allProducts.where((product) {
-          return product.productName.toLowerCase().contains(query);
-        }).toList();
-
-        emit(
-          ProductState.loaded(
-            filteredProducts,
-            searchQuery: query,
-            allProducts: currentState.allProducts,
-          ),
-        );
-      }
+      emit(
+        ProductState.loaded(
+          filteredProducts,
+          searchQuery: event.query.trim(),
+          allProducts: currentState.allProducts,
+        ),
+      );
     }
   }
 

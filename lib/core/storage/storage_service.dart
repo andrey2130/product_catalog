@@ -128,16 +128,26 @@ class StorageService {
     final prefs = await _prefs;
     await prefs.setString(
       _themeModeKey,
-      themeMode.when(light: () => 'light', dark: () => 'dark'),
+      themeMode.when(
+        light: () => 'light',
+        dark: () => 'dark',
+        system: () => 'system',
+      ),
     );
   }
 
   Future<ThemeState> getThemeMode() async {
     final prefs = await _prefs;
     final themeString = prefs.getString(_themeModeKey) ?? 'light';
-    return themeString == 'dark'
-        ? const ThemeState.dark()
-        : const ThemeState.light();
+    switch (themeString) {
+      case 'dark':
+        return const ThemeState.dark();
+      case 'system':
+        return const ThemeState.system();
+      case 'light':
+      default:
+        return const ThemeState.light();
+    }
   }
 }
 

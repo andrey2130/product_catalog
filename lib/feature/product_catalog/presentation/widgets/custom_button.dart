@@ -5,9 +5,6 @@ class CustomButton extends StatelessWidget {
   final double? height;
   final String text;
   final VoidCallback onPressed;
-  final Widget? icon;
-  final Widget? svgPicture;
-  final bool isLoading;
   final bool? showAnimation;
 
   const CustomButton({
@@ -16,9 +13,6 @@ class CustomButton extends StatelessWidget {
     super.key,
     this.width,
     this.height,
-    this.icon,
-    this.svgPicture,
-    this.isLoading = false,
     this.showAnimation = true,
   });
 
@@ -35,27 +29,11 @@ class CustomButton extends StatelessWidget {
               ? null
               : WidgetStateProperty.all(Colors.transparent),
         ),
-        onPressed: isLoading ? null : onPressed,
-        child: isLoading
-            ? SizedBox(
-                height: 20,
-                width: 20,
-                child: CircularProgressIndicator.adaptive(
-                  strokeWidth: 2,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    theme.colorScheme.onPrimary,
-                  ),
-                ),
-              )
-            : Row(
+        onPressed: onPressed,
+        child: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (svgPicture != null)
-                    svgPicture!
-                  else if (icon != null)
-                    icon!,
-                  if (svgPicture != null || icon != null) SizedBox(width: 8),
                   Flexible(
                     child: Text(
                       text,

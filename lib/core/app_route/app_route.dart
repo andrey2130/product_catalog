@@ -22,7 +22,7 @@ final appRoutes = GoRouter(
         return ProductDetailsPage(product: product);
       },
     ),
-    GoRoute(path: "/basket", builder: (context, state) => BasketPage()),
+    GoRoute(path: "/basket", builder: (context, state) => CartPage()),
     GoRoute(path: "/favorites", builder: (context, state) => const FavoritesPage()),
   ],
 );

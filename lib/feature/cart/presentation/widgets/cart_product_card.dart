@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:catalog_product/feature/cart/presentation/bloc/basket_bloc.dart';
-import 'package:catalog_product/feature/cart/presentation/widgets/basket_quantity_button.dart';
+import 'package:catalog_product/feature/cart/presentation/bloc/cart_bloc.dart';
+import 'package:catalog_product/feature/cart/presentation/widgets/cart_quantity_button.dart';
 import 'package:catalog_product/data/models/product_model.dart';
 
-class BasketProductCard extends StatelessWidget {
+class CartProductCard extends StatelessWidget {
   final ProductModel product;
 
-  const BasketProductCard({required this.product, super.key});
+  const CartProductCard({required this.product, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -75,8 +75,8 @@ class BasketProductCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 GestureDetector(
-                  onTap: () => context.read<BasketBloc>().add(
-                    BasketEvent.removeProduct(product.productId),
+                  onTap: () => context.read<CartBloc>().add(
+                    CartEvent.removeProduct(product.productId),
                   ),
                   child: Container(
                     decoration: BoxDecoration(
@@ -94,10 +94,10 @@ class BasketProductCard extends StatelessWidget {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    BasketQuantityButton(
+                    CartQuantityButton(
                       icon: Icons.remove,
-                      onTap: () => context.read<BasketBloc>().add(
-                        BasketEvent.decreaseQuantity(product.productId),
+                      onTap: () => context.read<CartBloc>().add(
+                        CartEvent.decreaseQuantity(product.productId),
                       ),
                     ),
                     Padding(
@@ -107,10 +107,10 @@ class BasketProductCard extends StatelessWidget {
                         style: const TextStyle(fontWeight: FontWeight.w600),
                       ),
                     ),
-                    BasketQuantityButton(
+                    CartQuantityButton(
                       icon: Icons.add,
-                      onTap: () => context.read<BasketBloc>().add(
-                        BasketEvent.increaseQuantity(product.productId),
+                      onTap: () => context.read<CartBloc>().add(
+                        CartEvent.increaseQuantity(product.productId),
                       ),
                     ),
                   ],

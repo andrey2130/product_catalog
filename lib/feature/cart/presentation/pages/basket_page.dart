@@ -1,21 +1,22 @@
+import 'package:catalog_product/feature/cart/presentation/widgets/cart_product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:catalog_product/feature/cart/presentation/bloc/basket_bloc.dart';
-import 'package:catalog_product/feature/cart/presentation/widgets/basket_product_card.dart';
+import 'package:catalog_product/feature/cart/presentation/bloc/cart_bloc.dart';
+
 import 'package:catalog_product/feature/product_catalog/presentation/widgets/custom_button.dart';
 
-class BasketPage extends StatefulWidget {
-  const BasketPage({super.key});
+class CartPage extends StatefulWidget {
+  const CartPage({super.key});
 
   @override
-  State<BasketPage> createState() => _BasketPageState();
+  State<CartPage> createState() => _CartPageState();
 }
 
-class _BasketPageState extends State<BasketPage> {
+class _CartPageState extends State<CartPage> {
   @override
   void initState() {
     super.initState();
-    context.read<BasketBloc>().add(const BasketEvent.loadBasketProducts());
+    context.read<CartBloc>().add(const CartEvent.loadBasketProducts());
   }
 
   @override
@@ -29,7 +30,7 @@ class _BasketPageState extends State<BasketPage> {
         backgroundColor: Theme.of(context).colorScheme.surface,
       ),
       body: SafeArea(
-        child: BlocBuilder<BasketBloc, BasketState>(
+        child: BlocBuilder<CartBloc, CartState>(
           builder: (context, state) {
             return state.maybeWhen(
               loading: () =>
@@ -67,7 +68,7 @@ class _BasketPageState extends State<BasketPage> {
                         itemCount: products.length,
                         separatorBuilder: (_, __) => const SizedBox(height: 16),
                         itemBuilder: (context, index) {
-                          return BasketProductCard(product: products[index]);
+                          return CartProductCard(product: products[index]);
                         },
                       ),
                     ),
@@ -107,8 +108,8 @@ class _BasketPageState extends State<BasketPage> {
                     const SizedBox(height: 12),
                     CustomButton(
                       text: "Спробувати знову",
-                      onPressed: () => context.read<BasketBloc>().add(
-                        const BasketEvent.loadBasketProducts(),
+                      onPressed: () => context.read<CartBloc>().add(
+                        const CartEvent.loadBasketProducts(),
                       ),
                     ),
                   ],

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'basket_bloc.dart';
+part of 'cart_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -20,7 +20,7 @@ mixin _$BasketEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BasketEvent);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CartEvent);
 }
 
 
@@ -37,12 +37,12 @@ String toString() {
 
 /// @nodoc
 class $BasketEventCopyWith<$Res>  {
-$BasketEventCopyWith(BasketEvent _, $Res Function(BasketEvent) __);
+$BasketEventCopyWith(CartEvent _, $Res Function(CartEvent) __);
 }
 
 
-/// Adds pattern-matching-related methods to [BasketEvent].
-extension BasketEventPatterns on BasketEvent {
+/// Adds pattern-matching-related methods to [CartEvent].
+extension BasketEventPatterns on CartEvent {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -192,7 +192,7 @@ return removeProduct(_that.productId);case _:
 /// @nodoc
 
 
-class LoadBasketProducts implements BasketEvent {
+class LoadBasketProducts implements CartEvent {
   const LoadBasketProducts();
   
 
@@ -224,7 +224,7 @@ String toString() {
 /// @nodoc
 
 
-class IncreaseQuantity implements BasketEvent {
+class IncreaseQuantity implements CartEvent {
   const IncreaseQuantity(this.productId);
   
 
@@ -290,7 +290,7 @@ as String,
 /// @nodoc
 
 
-class DecreaseQuantity implements BasketEvent {
+class DecreaseQuantity implements CartEvent {
   const DecreaseQuantity(this.productId);
   
 
@@ -356,7 +356,7 @@ as String,
 /// @nodoc
 
 
-class RemoveProduct implements BasketEvent {
+class RemoveProduct implements CartEvent {
   const RemoveProduct(this.productId);
   
 
@@ -428,7 +428,7 @@ mixin _$BasketState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BasketState);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CartState);
 }
 
 
@@ -445,12 +445,12 @@ String toString() {
 
 /// @nodoc
 class $BasketStateCopyWith<$Res>  {
-$BasketStateCopyWith(BasketState _, $Res Function(BasketState) __);
+$BasketStateCopyWith(CartState _, $Res Function(CartState) __);
 }
 
 
-/// Adds pattern-matching-related methods to [BasketState].
-extension BasketStatePatterns on BasketState {
+/// Adds pattern-matching-related methods to [CartState].
+extension BasketStatePatterns on CartState {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -600,7 +600,7 @@ return failure(_that.message);case _:
 /// @nodoc
 
 
-class Initial implements BasketState {
+class Initial implements CartState {
   const Initial();
   
 
@@ -632,7 +632,7 @@ String toString() {
 /// @nodoc
 
 
-class Loading implements BasketState {
+class Loading implements CartState {
   const Loading();
   
 
@@ -664,7 +664,7 @@ String toString() {
 /// @nodoc
 
 
-class Loaded implements BasketState {
+class Loaded implements CartState {
   const Loaded(final  List<ProductModel> products, this.total): _products = products;
   
 
@@ -738,7 +738,7 @@ as double,
 /// @nodoc
 
 
-class Failure implements BasketState {
+class Failure implements CartState {
   const Failure(this.message);
   
 

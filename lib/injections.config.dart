@@ -17,11 +17,10 @@ import 'feature/cart/data/datasource/basket_datasource.dart' as _i787;
 import 'feature/cart/data/repository/basket_repository_impl.dart' as _i416;
 import 'feature/cart/domain/repository/basket_repository.dart' as _i764;
 import 'feature/cart/domain/usecases/add_to_basket_usecase.dart' as _i238;
-import 'feature/cart/domain/usecases/get_bascket_products_usecase.dart' as _i44;
 import 'feature/cart/domain/usecases/remove_from_basket_usecase.dart' as _i665;
 import 'feature/cart/domain/usecases/update_basket_quantity_usecase.dart'
     as _i1057;
-import 'feature/cart/presentation/bloc/basket_bloc.dart' as _i229;
+import 'feature/cart/presentation/bloc/cart_bloc.dart' as _i229;
 import 'feature/favorites/data/datasource/favorites_datasource.dart' as _i802;
 import 'feature/favorites/data/repository/favorites_repository_impl.dart'
     as _i470;
@@ -88,9 +87,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i638.ToggleFavoriteUsecase>(
       () => _i638.ToggleFavoriteUsecase(gh<_i227.ProductCatalogRepository>()),
     );
-    gh.factory<_i44.GetBascketProductsUsecase>(
-      () => _i44.GetBascketProductsUsecase(gh<_i764.BasketRepository>()),
-    );
     gh.factory<_i682.FavoritesRepository>(
       () => _i470.FavoritesRepositoryImpl(gh<_i802.FavoritesDatasource>()),
     );
@@ -102,15 +98,15 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i238.AddToBasketUsecase>(),
       ),
     );
-    gh.factory<_i199.GetFavoriteProductsUsecase>(
-      () => _i199.GetFavoriteProductsUsecase(gh<_i682.FavoritesRepository>()),
-    );
-    gh.factory<_i229.BasketBloc>(
-      () => _i229.BasketBloc(
-        gh<_i44.GetBascketProductsUsecase>(),
+    gh.factory<_i229.CartBloc>(
+      () => _i229.CartBloc(
+        gh<_i764.BasketRepository>(),
         gh<_i665.RemoveFromBasketUsecase>(),
         gh<_i1057.UpdateBasketQuantityUsecase>(),
       ),
+    );
+    gh.factory<_i199.GetFavoriteProductsUsecase>(
+      () => _i199.GetFavoriteProductsUsecase(gh<_i682.FavoritesRepository>()),
     );
     gh.factory<_i502.FavoritesBloc>(
       () => _i502.FavoritesBloc(

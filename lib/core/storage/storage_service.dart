@@ -5,8 +5,8 @@ import 'package:injectable/injectable.dart';
 @Injectable()
 class StorageService {
   static const String _favoritesKey = 'favorites';
-  static const String _basketKey = 'basket';
-  static const String _basketQuantitiesKey = 'basket_quantities';
+  static const String _cartKey = 'cart';
+  static const String _cartQuantitiesKey = 'cart_quantities';
 
   Future<SharedPreferences> get _prefs async =>
       await SharedPreferences.getInstance();
@@ -39,27 +39,27 @@ class StorageService {
     await saveFavoriteIds(favorites);
   }
 
-  // Basket
-  Future<Set<String>> getBasketIds() async {
+  // Cart
+  Future<Set<String>> getCartIds() async {
     final prefs = await _prefs;
-    final basketJson = prefs.getString(_basketKey);
-    if (basketJson == null) return {};
+    final cartJson = prefs.getString(_cartKey);
+    if (cartJson == null) return {};
     try {
-      final List<dynamic> basketList = json.decode(basketJson);
-      return basketList.map((e) => e.toString()).toSet();
+      final List<dynamic> cartList = json.decode(cartJson);
+      return cartList.map((e) => e.toString()).toSet();
     } catch (e) {
       return {};
     }
   }
 
-  Future<void> saveBasketIds(Set<String> basketIds) async {
+  Future<void> saveCartIds(Set<String> cartIds) async {
     final prefs = await _prefs;
-    await prefs.setString(_basketKey, json.encode(basketIds.toList()));
+    await prefs.setString(_cartKey, json.encode(cartIds.toList()));
   }
 
-  Future<Map<String, int>> getBasketQuantities() async {
+  Future<Map<String, int>> getCartQuantities() async {
     final prefs = await _prefs;
-    final quantitiesJson = prefs.getString(_basketQuantitiesKey);
+    final quantitiesJson = prefs.getString(_cartQuantitiesKey);
     if (quantitiesJson == null) return {};
     try {
       final Map<String, dynamic> quantitiesMap =
@@ -70,49 +70,49 @@ class StorageService {
     }
   }
 
-  Future<void> saveBasketQuantities(Map<String, int> quantities) async {
+  Future<void> saveCartQuantities(Map<String, int> quantities) async {
     final prefs = await _prefs;
     await prefs.setString(
-      _basketQuantitiesKey,
+      _cartQuantitiesKey,
       json.encode(quantities),
     );
   }
 
-  Future<void> addToBasket(String productId, {int quantity = 1}) async {
-    final basketIds = await getBasketIds();
-    basketIds.add(productId);
-    await saveBasketIds(basketIds);
+  Future<void> addToCart(String productId, {int quantity = 1}) async {
+    final cartIds = await getCartIds();
+    cartIds.add(productId);
+    await saveCartIds(cartIds);
 
-    final quantities = await getBasketQuantities();
+    final quantities = await getCartQuantities();
     quantities[productId] = (quantities[productId] ?? 0) + quantity;
-    await saveBasketQuantities(quantities);
+    await saveCartQuantities(quantities);
   }
 
-  Future<void> removeFromBasket(String productId) async {
-    final basketIds = await getBasketIds();
-    basketIds.remove(productId);
-    await saveBasketIds(basketIds);
+  Future<void> removeFromCart(String productId) async {
+    final cartIds = await getCartIds();
+    cartIds.remove(productId);
+    await saveCartIds(cartIds);
 
-    final quantities = await getBasketQuantities();
+    final quantities = await getCartQuantities();
     quantities.remove(productId);
-    await saveBasketQuantities(quantities);
+    await saveCartQuantities(quantities);
   }
 
-  Future<void> updateBasketQuantity(String productId, int quantity) async {
+  Future<void> updateCartQuantity(String productId, int quantity) async {
     if (quantity <= 0) {
-      await removeFromBasket(productId);
+      await removeFromCart(productId);
       return;
     }
 
-    final basketIds = await getBasketIds();
-    if (!basketIds.contains(productId)) {
-      basketIds.add(productId);
-      await saveBasketIds(basketIds);
+    final cartIds = await getCartIds();
+    if (!cartIds.contains(productId)) {
+      cartIds.add(productId);
+      await saveCartIds(cartIds);
     }
 
-    final quantities = await getBasketQuantities();
+    final quantities = await getCartQuantities();
     quantities[productId] = quantity;
-    await saveBasketQuantities(quantities);
+    await saveCartQuantities(quantities);
   }
 }
 

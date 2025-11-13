@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class BasketQuantityButton extends StatelessWidget {
+class CartQuantityButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback onTap;
 
-  const BasketQuantityButton({
+  const CartQuantityButton({
     required this.icon,
     required this.onTap,
     super.key,

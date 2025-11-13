@@ -1,27 +1,26 @@
+import 'package:catalog_product/feature/cart/domain/repository/basket_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:catalog_product/core/usecases/usecase.dart';
 import 'package:catalog_product/data/models/product_model.dart';
-import 'package:catalog_product/feature/cart/domain/usecases/get_bascket_products_usecase.dart';
 import 'package:catalog_product/feature/cart/domain/usecases/remove_from_basket_usecase.dart';
 import 'package:catalog_product/feature/cart/domain/usecases/update_basket_quantity_usecase.dart';
 
-part 'basket_event.dart';
-part 'basket_state.dart';
+part 'cart_event.dart';
+part 'cart_state.dart';
 part 'basket_bloc.freezed.dart';
 
 @Injectable()
-class BasketBloc extends Bloc<BasketEvent, BasketState> {
-  final GetBascketProductsUsecase _getBasketProductsUsecase;
+class CartBloc extends Bloc<CartEvent, CartState> {
+  final BasketRepository _basketRepository;
   final RemoveFromBasketUsecase _removeFromBasketUsecase;
   final UpdateBasketQuantityUsecase _updateBasketQuantityUsecase;
 
-  BasketBloc(
-    this._getBasketProductsUsecase,
+  CartBloc(
+    this._basketRepository,
     this._removeFromBasketUsecase,
     this._updateBasketQuantityUsecase,
-  ) : super(const BasketState.initial()) {
+  ) : super(const CartState.initial()) {
     on<LoadBasketProducts>(_loadBasketProducts);
     on<IncreaseQuantity>(_increaseQuantity);
     on<DecreaseQuantity>(_decreaseQuantity);
@@ -37,23 +36,23 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
 
   Future<void> _loadBasketProducts(
     LoadBasketProducts event,
-    Emitter<BasketState> emit,
+    Emitter<CartState> emit,
   ) async {
-    emit(const BasketState.loading());
+    emit(const CartState.loading());
 
-    final result = await _getBasketProductsUsecase(const NoParams());
+    final result = await _basketRepository.getBasketProducts();
 
-    result.fold((failure) => emit(BasketState.failure(failure.message)), (
+    result.fold((failure) => emit(CartState.failure(failure.message)), (
       products,
     ) {
       final total = _calculateTotal(products);
-      emit(BasketState.loaded(products, total));
+      emit(CartState.loaded(products, total));
     });
   }
 
   Future<void> _increaseQuantity(
     IncreaseQuantity event,
-    Emitter<BasketState> emit,
+    Emitter<CartState> emit,
   ) async {
     await state.maybeWhen(
       loaded: (products, total) async {
@@ -72,12 +71,12 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
         );
 
         // Reload basket products to get updated state
-        final result = await _getBasketProductsUsecase(const NoParams());
+        final result = await _basketRepository.getBasketProducts();
         result.fold(
-          (failure) => emit(BasketState.failure(failure.message)),
+          (failure) => emit(CartState.failure(failure.message)),
           (updatedProducts) {
             final newTotal = _calculateTotal(updatedProducts);
-            emit(BasketState.loaded(updatedProducts, newTotal));
+            emit(CartState.loaded(updatedProducts, newTotal));
           },
         );
       },
@@ -87,7 +86,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
 
   Future<void> _decreaseQuantity(
     DecreaseQuantity event,
-    Emitter<BasketState> emit,
+    Emitter<CartState> emit,
   ) async {
     await state.maybeWhen(
       loaded: (products, total) async {
@@ -111,12 +110,12 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
         }
 
         // Reload basket products to get updated state
-        final result = await _getBasketProductsUsecase(const NoParams());
+        final result = await _basketRepository.getBasketProducts();
         result.fold(
-          (failure) => emit(BasketState.failure(failure.message)),
+          (failure) => emit(CartState.failure(failure.message)),
           (updatedProducts) {
             final newTotal = _calculateTotal(updatedProducts);
-            emit(BasketState.loaded(updatedProducts, newTotal));
+            emit(CartState.loaded(updatedProducts, newTotal));
           },
         );
       },
@@ -126,18 +125,18 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
 
   Future<void> _removeProduct(
     RemoveProduct event,
-    Emitter<BasketState> emit,
+    Emitter<CartState> emit,
   ) async {
     // Save to SharedPreferences
     await _removeFromBasketUsecase(event.productId);
 
     // Reload basket products to get updated state
-    final result = await _getBasketProductsUsecase(const NoParams());
+    final result = await _basketRepository.getBasketProducts();
     result.fold(
-      (failure) => emit(BasketState.failure(failure.message)),
+      (failure) => emit(CartState.failure(failure.message)),
       (products) {
         final total = _calculateTotal(products);
-        emit(BasketState.loaded(products, total));
+        emit(CartState.loaded(products, total));
       },
     );
   }

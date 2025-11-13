@@ -39,8 +39,8 @@ class ProductCatalogDatasourceImpl implements ProductCatalogDatasource {
 
       // Load saved states from SharedPreferences
       final favorites = await _storageService.getFavoriteIds();
-      final basketIds = await _storageService.getBasketIds();
-      final quantities = await _storageService.getBasketQuantities();
+      final basketIds = await _storageService.getCartIds();
+      final quantities = await _storageService.getCartQuantities();
 
       return product.copyWith(
         isFavorite: favorites.contains(productId),
@@ -59,8 +59,8 @@ class ProductCatalogDatasourceImpl implements ProductCatalogDatasource {
   @override
   Future<List<ProductModel>> getAllProducts() async {
     final favorites = await _storageService.getFavoriteIds();
-    final basketIds = await _storageService.getBasketIds();
-    final quantities = await _storageService.getBasketQuantities();
+    final basketIds = await _storageService.getCartIds();
+    final quantities = await _storageService.getCartQuantities();
 
     return mockProducts.map((product) {
       return product.copyWith(
@@ -85,8 +85,8 @@ class ProductCatalogDatasourceImpl implements ProductCatalogDatasource {
 
       // Get updated state
       final favorites = await _storageService.getFavoriteIds();
-      final basketIds = await _storageService.getBasketIds();
-      final quantities = await _storageService.getBasketQuantities();
+      final basketIds = await _storageService.getCartIds();
+      final quantities = await _storageService.getCartQuantities();
 
       final product = mockProducts[index];
       return product.copyWith(
@@ -112,12 +112,12 @@ class ProductCatalogDatasourceImpl implements ProductCatalogDatasource {
       }
 
       // Save to SharedPreferences
-      await _storageService.addToBasket(productId, quantity: quantity);
+      await _storageService.addToCart(productId, quantity: quantity);
 
       // Get updated state
       final favorites = await _storageService.getFavoriteIds();
-      final basketIds = await _storageService.getBasketIds();
-      final quantities = await _storageService.getBasketQuantities();
+      final basketIds = await _storageService.getCartIds();
+      final quantities = await _storageService.getCartQuantities();
 
       final product = mockProducts[index];
       return product.copyWith(
@@ -143,12 +143,12 @@ class ProductCatalogDatasourceImpl implements ProductCatalogDatasource {
       }
 
       // Save to SharedPreferences
-      await _storageService.removeFromBasket(productId);
+      await _storageService.removeFromCart(productId);
 
       // Get updated state
       final favorites = await _storageService.getFavoriteIds();
-      final basketIds = await _storageService.getBasketIds();
-      final quantities = await _storageService.getBasketQuantities();
+      final basketIds = await _storageService.getCartIds();
+      final quantities = await _storageService.getCartQuantities();
 
       final product = mockProducts[index];
       return product.copyWith(
@@ -174,12 +174,12 @@ class ProductCatalogDatasourceImpl implements ProductCatalogDatasource {
       }
 
       // Save to SharedPreferences
-      await _storageService.updateBasketQuantity(productId, quantity);
+      await _storageService.updateCartQuantity(productId, quantity);
 
       // Get updated state
       final favorites = await _storageService.getFavoriteIds();
-      final basketIds = await _storageService.getBasketIds();
-      final quantities = await _storageService.getBasketQuantities();
+      final basketIds = await _storageService.getCartIds();
+      final quantities = await _storageService.getCartQuantities();
 
       final product = mockProducts[index];
       return product.copyWith(

@@ -87,7 +87,7 @@ class AppThemes {
         ),
         labelStyle: const TextStyle(color: textSecondary, fontSize: 14),
         hintStyle: TextStyle(
-          color: textSecondary.withOpacity(0.6),
+          color: textSecondary.withValues(alpha: 0.6),
           fontSize: 14,
         ),
         contentPadding: const EdgeInsets.symmetric(
@@ -100,7 +100,7 @@ class AppThemes {
         backgroundColor: background,
         foregroundColor: textPrimary,
         elevation: 0,
-        shadowColor: Colors.black.withOpacity(0.05),
+        shadowColor: Colors.black.withValues(alpha: 0.05),
         centerTitle: true,
         titleTextStyle: GoogleFonts.inter(
           fontSize: 18,
@@ -113,7 +113,7 @@ class AppThemes {
       cardTheme: CardThemeData(
         color: surface,
         elevation: 0,
-        shadowColor: Colors.black.withOpacity(0.05),
+          shadowColor: Colors.black.withValues(alpha: 0.05),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       ),
@@ -183,8 +183,8 @@ class AppThemes {
         elevation: 8,
       ),
       visualDensity: VisualDensity.standard,
-      splashColor: primary.withOpacity(0.1),
-      highlightColor: primary.withOpacity(0.05),
+      splashColor: primary.withValues(alpha: 0.1),
+      highlightColor: primary.withValues(alpha: 0.05),
     );
   }
 
@@ -255,7 +255,7 @@ class AppThemes {
         ),
         labelStyle: const TextStyle(color: darkTextSecondary, fontSize: 14),
         hintStyle: TextStyle(
-          color: darkTextSecondary.withOpacity(0.6),
+          color: darkTextSecondary.withValues(alpha: 0.6),
           fontSize: 14,
         ),
         contentPadding: const EdgeInsets.symmetric(
@@ -268,7 +268,7 @@ class AppThemes {
         backgroundColor: darkBackground,
         foregroundColor: darkTextPrimary,
         elevation: 0,
-        shadowColor: Colors.black.withOpacity(0.2),
+        shadowColor: Colors.black.withValues(alpha: 0.2),
         centerTitle: true,
         titleTextStyle: GoogleFonts.inter(
           fontSize: 18,
@@ -281,7 +281,7 @@ class AppThemes {
       cardTheme: CardThemeData(
         color: darkSurface,
         elevation: 0,
-        shadowColor: Colors.black.withOpacity(0.2),
+        shadowColor: Colors.black.withValues(alpha: 0.2),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       ),
@@ -351,8 +351,8 @@ class AppThemes {
         elevation: 8,
       ),
       visualDensity: VisualDensity.standard,
-      splashColor: primary.withOpacity(0.2),
-      highlightColor: primary.withOpacity(0.1),
+      splashColor: primary.withValues(alpha: 0.2),
+      highlightColor: primary.withValues(alpha: 0.1),
     );
   }
 }

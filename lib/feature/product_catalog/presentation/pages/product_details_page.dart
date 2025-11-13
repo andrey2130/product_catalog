@@ -61,7 +61,7 @@ class ProductDetailsPage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(12),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withOpacity(0.05),
+                                    color: Colors.black.withValues(alpha: 0.05),
                                     blurRadius: 10,
                                     offset: const Offset(0, 2),
                                   ),
@@ -81,7 +81,7 @@ class ProductDetailsPage extends StatelessWidget {
                                       : Icons.favorite_border,
                                   color: (currentProduct.isFavorite)
                                       ? colorScheme.error
-                                      : colorScheme.onSurface.withOpacity(0.5),
+                                        : colorScheme.onSurface.withValues(alpha: 0.5),
                                 ),
                               ),
                             ),
@@ -98,7 +98,7 @@ class ProductDetailsPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(16),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.03),
+                                color: Colors.black.withValues(alpha: 0.03),
                                 blurRadius: 8,
                                 offset: const Offset(0, 2),
                               ),
@@ -130,7 +130,7 @@ class ProductDetailsPage extends StatelessWidget {
                                 currentProduct.description,
                                 style: textTheme.bodyLarge?.copyWith(
                                   height: 1.6,
-                                  color: colorScheme.onSurface.withOpacity(0.8),
+                                  color: colorScheme.onSurface.withValues(alpha: 0.8),
                                   fontSize: 15,
                                 ),
                               ),
@@ -146,20 +146,20 @@ class ProductDetailsPage extends StatelessWidget {
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                               colors: [
-                                colorScheme.primary.withOpacity(0.12),
-                                colorScheme.primary.withOpacity(0.06),
+                                colorScheme.primary.withValues(alpha: 0.12),
+                                colorScheme.primary.withValues(alpha: 0.06),
                               ],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
                             ),
                             borderRadius: BorderRadius.circular(16),
                             border: Border.all(
-                              color: colorScheme.primary.withOpacity(0.25),
+                              color: colorScheme.primary.withValues(alpha: 0.25),
                               width: 1.5,
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: colorScheme.primary.withOpacity(0.1),
+                                color: colorScheme.primary.withValues(alpha: 0.1),
                                 blurRadius: 12,
                                 offset: const Offset(0, 4),
                               ),
@@ -175,7 +175,7 @@ class ProductDetailsPage extends StatelessWidget {
                                   Text(
                                     "Ціна",
                                     style: textTheme.bodyMedium?.copyWith(
-                                      color: colorScheme.onSurface.withOpacity(
+                                      color: colorScheme.onSurface.withValues(alpha:
                                         0.7,
                                       ),
                                       fontSize: 14,
@@ -266,7 +266,7 @@ class ProductDetailsPage extends StatelessWidget {
                   child: Icon(
                     Icons.broken_image,
                     size: 80,
-                    color: colorScheme.onSurface.withOpacity(0.3),
+                    color: colorScheme.onSurface.withValues(alpha: 0.3),
                   ),
                 ),
               ),

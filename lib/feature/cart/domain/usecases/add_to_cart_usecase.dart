@@ -7,13 +7,13 @@ import 'package:catalog_product/feature/cart/domain/repository/cart_repository.d
 
 @injectable
 class AddToCartUsecase
-    extends UseCase<Either<AppFailure, ProductModel>, AddToBasketParams> {
+    extends UseCase<Either<AppFailure, ProductModel>, AddToCartParams> {
   AddToCartUsecase(this._repository);
 
   final CartRepository _repository;
 
   @override
-  Future<Either<AppFailure, ProductModel>> call(AddToBasketParams params) {
+  Future<Either<AppFailure, ProductModel>> call(AddToCartParams params) {
     return _repository.addToCart(
       params.productId,
       quantity: params.quantity,
@@ -21,11 +21,11 @@ class AddToCartUsecase
   }
 }
 
-class AddToBasketParams {
+class AddToCartParams {
   final String productId;
   final int quantity;
 
-  AddToBasketParams({
+  AddToCartParams({
     required this.productId,
     this.quantity = 1,
   });

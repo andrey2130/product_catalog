@@ -22,12 +22,12 @@ class CartDatasourceImpl implements CartDatasource {
   @override
   Future<List<ProductModel>> getCartProducts() async {
     try {
-      final basketIds = await _storageService.getCartIds();
+      final cartIds = await _storageService.getCartIds();
       final quantities = await _storageService.getCartQuantities();
       final favorites = await _storageService.getFavoriteIds();
 
       return mockProducts
-          .where((product) => basketIds.contains(product.productId))
+          .where((product) => cartIds.contains(product.productId))
           .map((product) {
         return product.copyWith(
           isFavorite: favorites.contains(product.productId),
@@ -52,13 +52,13 @@ class CartDatasourceImpl implements CartDatasource {
       await _storageService.addToCart(productId, quantity: quantity);
 
       final favorites = await _storageService.getFavoriteIds();
-      final basketIds = await _storageService.getCartIds();
+      final cartIds = await _storageService.getCartIds();
       final quantities = await _storageService.getCartQuantities();
 
       final product = mockProducts[index];
       return product.copyWith(
         isFavorite: favorites.contains(productId),
-        inCart: basketIds.contains(productId),
+        inCart: cartIds.contains(productId),
         quantity: quantities[productId] ?? quantity,
       );
     } catch (e, stackTrace) {
@@ -81,13 +81,13 @@ class CartDatasourceImpl implements CartDatasource {
       await _storageService.removeFromCart(productId);
 
       final favorites = await _storageService.getFavoriteIds();
-      final basketIds = await _storageService.getCartIds();
+      final cartIds = await _storageService.getCartIds();
       final quantities = await _storageService.getCartQuantities();
 
       final product = mockProducts[index];
       return product.copyWith(
         isFavorite: favorites.contains(productId),
-        inCart: basketIds.contains(productId),
+        inCart: cartIds.contains(productId),
         quantity: quantities[productId] ?? 0,
       );
     } catch (e, stackTrace) {
@@ -112,13 +112,13 @@ class CartDatasourceImpl implements CartDatasource {
 
 
       final favorites = await _storageService.getFavoriteIds();
-      final basketIds = await _storageService.getCartIds();
+      final cartIds = await _storageService.getCartIds();
       final quantities = await _storageService.getCartQuantities();
 
       final product = mockProducts[index];
       return product.copyWith(
         isFavorite: favorites.contains(productId),
-        inCart: basketIds.contains(productId),
+        inCart: cartIds.contains(productId),
         quantity: quantities[productId] ?? 0,
       );
     } catch (e, stackTrace) {

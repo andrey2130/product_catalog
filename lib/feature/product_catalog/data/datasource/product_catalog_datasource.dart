@@ -19,15 +19,15 @@ class ProductCatalogDatasourceImpl implements ProductCatalogDatasource {
   @override
   Future<List<ProductModel>> getAllProducts() async {
     final favorites = await _storageService.getFavoriteIds();
-    final basketIds = await _storageService.getCartIds();
+    final cartIds = await _storageService.getCartIds();
     final quantities = await _storageService.getCartQuantities();
 
     return mockProducts.map((product) {
       return product.copyWith(
         isFavorite: favorites.contains(product.productId),
-        inCart: basketIds.contains(product.productId),
+        inCart: cartIds.contains(product.productId),
         quantity: quantities[product.productId] ??
-            (basketIds.contains(product.productId) ? 1 : 0),
+            (cartIds.contains(product.productId) ? 1 : 0),
       );
     }).toList();
   }
@@ -40,19 +40,19 @@ class ProductCatalogDatasourceImpl implements ProductCatalogDatasource {
         throw Exception('Product with id $productId not found');
       }
 
-      // Save to SharedPreferences
+      
       await _storageService.toggleFavorite(productId);
 
-      // Get updated state
+      
       final favorites = await _storageService.getFavoriteIds();
-      final basketIds = await _storageService.getCartIds();
+      final cartIds = await _storageService.getCartIds();
       final quantities = await _storageService.getCartQuantities();
 
       final product = mockProducts[index];
       return product.copyWith(
         isFavorite: favorites.contains(productId),
-        inCart: basketIds.contains(productId),
-        quantity: quantities[productId] ?? (basketIds.contains(productId) ? 1 : 0),
+        inCart: cartIds.contains(productId),
+        quantity: quantities[productId] ?? (cartIds.contains(productId) ? 1 : 0),
       );
     } catch (e, stackTrace) {
       log(

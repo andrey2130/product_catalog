@@ -297,7 +297,7 @@ class ProductDetailsPage extends StatelessWidget {
               ? () {}
               : () {
                   context.read<product_bloc.ProductBloc>().add(
-                        product_bloc.ProductEvent.addToBasket(product.productId),
+                        product_bloc.ProductEvent.addToCart(product.productId),
                       );
                 },
         ),

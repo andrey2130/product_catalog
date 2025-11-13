@@ -24,7 +24,7 @@ final appRoutes = GoRouter(
         return ProductDetailsPage(product: product);
       },
     ),
-    GoRoute(path: "/basket", builder: (context, state) => CartPage()),
+    GoRoute(path: "/cart", builder: (context, state) => CartPage()),
     GoRoute(path: "/favorites", builder: (context, state) => const FavoritesPage()),
     GoRoute(path: "/browser", builder: (context, state) => const MiniBrowser()),
     GoRoute(path: "/settings", builder: (context, state) => const SettingsPage()),

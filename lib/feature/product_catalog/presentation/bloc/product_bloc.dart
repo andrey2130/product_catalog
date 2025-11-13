@@ -28,7 +28,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     on<LoadAllProducts>(_loadAllproducts);
     on<ToggleFavorite>(_toggleFavorite);
     on<SearchProducts>(_searchProducts);
-    on<AddToBasket>(_addToBasket);
+    on<AddToCart>(_addToCart);
   }
 
   Future<void> _loadAllproducts(
@@ -118,8 +118,8 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     }
   }
 
-  Future<void> _addToBasket(
-    AddToBasket event,
+  Future<void> _addToCart(
+    AddToCart event,
     Emitter<ProductState> emit,
   ) async {
     final currentState = state;
@@ -143,7 +143,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       );
 
       final result = await _addToCartUsecase(
-        AddToBasketParams(
+        AddToCartParams(
           productId: event.productId,
           quantity: 1,
         ),

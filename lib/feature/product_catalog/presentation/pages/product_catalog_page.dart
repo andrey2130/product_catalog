@@ -32,7 +32,7 @@ class _ProductCatalogPageState extends State<ProductCatalogPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () => context.push("/basket"),
+        onPressed: () => context.push("/cart"),
         child: Icon(Icons.shopping_basket),
       ),
       body: SafeArea(

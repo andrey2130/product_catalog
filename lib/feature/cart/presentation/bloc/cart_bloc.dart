@@ -63,7 +63,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         );
         final newQuantity = product.quantity + 1;
 
-        // Save to SharedPreferences
+        
         await _updateCartQuantityUsecase(
           UpdateCartQuantityParams(
             productId: event.productId,
@@ -71,7 +71,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           ),
         );
 
-        // Reload basket products to get updated state
+        
         final result = await _cartRepository.getCartProducts();
         result.fold(
           (failure) => emit(CartState.failure(failure.message)),
@@ -98,10 +98,10 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         final newQuantity = product.quantity - 1;
 
         if (newQuantity <= 0) {
-          // Remove from basket
+
           await _removeFromCartUsecase(event.productId);
         } else {
-          // Update quantity
+
           await _updateCartQuantityUsecase(
             UpdateCartQuantityParams(
               productId: event.productId,
@@ -110,7 +110,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           );
         }
 
-        // Reload basket products to get updated state
         final result = await _cartRepository.getCartProducts();
         result.fold(
           (failure) => emit(CartState.failure(failure.message)),
@@ -128,10 +127,10 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     RemoveProduct event,
     Emitter<CartState> emit,
   ) async {
-    // Save to SharedPreferences
+    
     await _removeFromCartUsecase(event.productId);
 
-    // Reload basket products to get updated state
+    
     final result = await _cartRepository.getCartProducts();
     result.fold(
       (failure) => emit(CartState.failure(failure.message)),
@@ -155,7 +154,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         emit(CartState.failure(failure.message));
       },
       (_) async {
-        // Reload cart products to get updated state (will be empty)
+        
         final reloadResult = await _cartRepository.getCartProducts();
         reloadResult.fold(
           (failure) => emit(CartState.failure(failure.message)),

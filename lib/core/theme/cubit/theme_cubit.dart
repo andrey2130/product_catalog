@@ -11,7 +11,7 @@ part 'theme_cubit.freezed.dart';
 class ThemeCubit extends Cubit<ThemeState> {
   final StorageService _storageService;
 
-  ThemeCubit(this._storageService) : super(const ThemeState.light()) {
+  ThemeCubit(this._storageService) : super(const ThemeState.system()) {
     _loadTheme();
   }
 

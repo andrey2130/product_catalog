@@ -272,7 +272,7 @@ class ProductDetailsPage extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: CustomButton(
-          text: product.inCart ? "Вже в кошику" : "В кошик",
+          text: product.inCart ? "Вже в кошику" : "До кошика",
           onPressed: product.inCart
               ? () {}
               : () {

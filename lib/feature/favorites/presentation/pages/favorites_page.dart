@@ -94,7 +94,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                       SliverFillRemaining(
                         child: const EmptyStateWidget(
                           icon: Icons.favorite_border,
-                          message: "Список улюблених порожній",
+                          message: "Поки порожньо",
                         ),
                       )
                     else

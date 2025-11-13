@@ -55,13 +55,14 @@ extension ProductEventPatterns on ProductEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( LoadAllProducts value)?  loadAllProducts,TResult Function( ToggleFavorite value)?  toggleFavorite,TResult Function( SearchProducts value)?  searchProducts,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( LoadAllProducts value)?  loadAllProducts,TResult Function( ToggleFavorite value)?  toggleFavorite,TResult Function( SearchProducts value)?  searchProducts,TResult Function( AddToBasket value)?  addToBasket,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case LoadAllProducts() when loadAllProducts != null:
 return loadAllProducts(_that);case ToggleFavorite() when toggleFavorite != null:
 return toggleFavorite(_that);case SearchProducts() when searchProducts != null:
-return searchProducts(_that);case _:
+return searchProducts(_that);case AddToBasket() when addToBasket != null:
+return addToBasket(_that);case _:
   return orElse();
 
 }
@@ -79,13 +80,14 @@ return searchProducts(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( LoadAllProducts value)  loadAllProducts,required TResult Function( ToggleFavorite value)  toggleFavorite,required TResult Function( SearchProducts value)  searchProducts,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( LoadAllProducts value)  loadAllProducts,required TResult Function( ToggleFavorite value)  toggleFavorite,required TResult Function( SearchProducts value)  searchProducts,required TResult Function( AddToBasket value)  addToBasket,}){
 final _that = this;
 switch (_that) {
 case LoadAllProducts():
 return loadAllProducts(_that);case ToggleFavorite():
 return toggleFavorite(_that);case SearchProducts():
-return searchProducts(_that);case _:
+return searchProducts(_that);case AddToBasket():
+return addToBasket(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -102,13 +104,14 @@ return searchProducts(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( LoadAllProducts value)?  loadAllProducts,TResult? Function( ToggleFavorite value)?  toggleFavorite,TResult? Function( SearchProducts value)?  searchProducts,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( LoadAllProducts value)?  loadAllProducts,TResult? Function( ToggleFavorite value)?  toggleFavorite,TResult? Function( SearchProducts value)?  searchProducts,TResult? Function( AddToBasket value)?  addToBasket,}){
 final _that = this;
 switch (_that) {
 case LoadAllProducts() when loadAllProducts != null:
 return loadAllProducts(_that);case ToggleFavorite() when toggleFavorite != null:
 return toggleFavorite(_that);case SearchProducts() when searchProducts != null:
-return searchProducts(_that);case _:
+return searchProducts(_that);case AddToBasket() when addToBasket != null:
+return addToBasket(_that);case _:
   return null;
 
 }
@@ -125,12 +128,13 @@ return searchProducts(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loadAllProducts,TResult Function( String productId)?  toggleFavorite,TResult Function( String query)?  searchProducts,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loadAllProducts,TResult Function( String productId)?  toggleFavorite,TResult Function( String query)?  searchProducts,TResult Function( String productId)?  addToBasket,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case LoadAllProducts() when loadAllProducts != null:
 return loadAllProducts();case ToggleFavorite() when toggleFavorite != null:
 return toggleFavorite(_that.productId);case SearchProducts() when searchProducts != null:
-return searchProducts(_that.query);case _:
+return searchProducts(_that.query);case AddToBasket() when addToBasket != null:
+return addToBasket(_that.productId);case _:
   return orElse();
 
 }
@@ -148,12 +152,13 @@ return searchProducts(_that.query);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loadAllProducts,required TResult Function( String productId)  toggleFavorite,required TResult Function( String query)  searchProducts,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loadAllProducts,required TResult Function( String productId)  toggleFavorite,required TResult Function( String query)  searchProducts,required TResult Function( String productId)  addToBasket,}) {final _that = this;
 switch (_that) {
 case LoadAllProducts():
 return loadAllProducts();case ToggleFavorite():
 return toggleFavorite(_that.productId);case SearchProducts():
-return searchProducts(_that.query);case _:
+return searchProducts(_that.query);case AddToBasket():
+return addToBasket(_that.productId);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -170,12 +175,13 @@ return searchProducts(_that.query);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loadAllProducts,TResult? Function( String productId)?  toggleFavorite,TResult? Function( String query)?  searchProducts,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loadAllProducts,TResult? Function( String productId)?  toggleFavorite,TResult? Function( String query)?  searchProducts,TResult? Function( String productId)?  addToBasket,}) {final _that = this;
 switch (_that) {
 case LoadAllProducts() when loadAllProducts != null:
 return loadAllProducts();case ToggleFavorite() when toggleFavorite != null:
 return toggleFavorite(_that.productId);case SearchProducts() when searchProducts != null:
-return searchProducts(_that.query);case _:
+return searchProducts(_that.query);case AddToBasket() when addToBasket != null:
+return addToBasket(_that.productId);case _:
   return null;
 
 }
@@ -340,6 +346,72 @@ class _$SearchProductsCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') $Res call({Object? query = null,}) {
   return _then(SearchProducts(
 null == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class AddToBasket implements ProductEvent {
+  const AddToBasket(this.productId);
+  
+
+ final  String productId;
+
+/// Create a copy of ProductEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$AddToBasketCopyWith<AddToBasket> get copyWith => _$AddToBasketCopyWithImpl<AddToBasket>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AddToBasket&&(identical(other.productId, productId) || other.productId == productId));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,productId);
+
+@override
+String toString() {
+  return 'ProductEvent.addToBasket(productId: $productId)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $AddToBasketCopyWith<$Res> implements $ProductEventCopyWith<$Res> {
+  factory $AddToBasketCopyWith(AddToBasket value, $Res Function(AddToBasket) _then) = _$AddToBasketCopyWithImpl;
+@useResult
+$Res call({
+ String productId
+});
+
+
+
+
+}
+/// @nodoc
+class _$AddToBasketCopyWithImpl<$Res>
+    implements $AddToBasketCopyWith<$Res> {
+  _$AddToBasketCopyWithImpl(this._self, this._then);
+
+  final AddToBasket _self;
+  final $Res Function(AddToBasket) _then;
+
+/// Create a copy of ProductEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? productId = null,}) {
+  return _then(AddToBasket(
+null == productId ? _self.productId : productId // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

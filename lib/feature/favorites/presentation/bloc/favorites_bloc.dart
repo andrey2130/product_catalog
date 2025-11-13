@@ -41,10 +41,10 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     RemoveFavorite event,
     Emitter<FavoritesState> emit,
   ) async {
-    // Toggle favorite status in datasource
+
     await _toggleFavoriteUsecase(event.productId);
 
-    // Update local state
+
     state.maybeWhen(
       loaded: (products) {
         final updated = products

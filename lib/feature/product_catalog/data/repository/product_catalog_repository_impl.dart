@@ -45,4 +45,42 @@ class ProductCatalogRepositoryImpl implements ProductCatalogRepository {
       return Left(AppFailure(message: e.toString()));
     }
   }
+
+  @override
+  Future<Either<AppFailure, ProductModel>> addToBasket(
+    String productId, {
+    int quantity = 1,
+  }) async {
+    try {
+      final product = await _datasource.addToBasket(productId, quantity: quantity);
+      return Right(product);
+    } catch (e) {
+      return Left(AppFailure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<AppFailure, ProductModel>> removeFromBasket(
+    String productId,
+  ) async {
+    try {
+      final product = await _datasource.removeFromBasket(productId);
+      return Right(product);
+    } catch (e) {
+      return Left(AppFailure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<AppFailure, ProductModel>> updateBasketQuantity(
+    String productId,
+    int quantity,
+  ) async {
+    try {
+      final product = await _datasource.updateBasketQuantity(productId, quantity);
+      return Right(product);
+    } catch (e) {
+      return Left(AppFailure(message: e.toString()));
+    }
+  }
 }

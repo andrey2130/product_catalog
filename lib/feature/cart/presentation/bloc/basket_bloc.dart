@@ -4,6 +4,8 @@ import 'package:injectable/injectable.dart';
 import 'package:catalog_product/core/usecases/usecase.dart';
 import 'package:catalog_product/data/models/product_model.dart';
 import 'package:catalog_product/feature/cart/domain/usecases/get_bascket_products_usecase.dart';
+import 'package:catalog_product/feature/cart/domain/usecases/remove_from_basket_usecase.dart';
+import 'package:catalog_product/feature/cart/domain/usecases/update_basket_quantity_usecase.dart';
 
 part 'basket_event.dart';
 part 'basket_state.dart';
@@ -12,9 +14,14 @@ part 'basket_bloc.freezed.dart';
 @Injectable()
 class BasketBloc extends Bloc<BasketEvent, BasketState> {
   final GetBascketProductsUsecase _getBasketProductsUsecase;
+  final RemoveFromBasketUsecase _removeFromBasketUsecase;
+  final UpdateBasketQuantityUsecase _updateBasketQuantityUsecase;
 
-  BasketBloc(this._getBasketProductsUsecase)
-    : super(const BasketState.initial()) {
+  BasketBloc(
+    this._getBasketProductsUsecase,
+    this._removeFromBasketUsecase,
+    this._updateBasketQuantityUsecase,
+  ) : super(const BasketState.initial()) {
     on<LoadBasketProducts>(_loadBasketProducts);
     on<IncreaseQuantity>(_increaseQuantity);
     on<DecreaseQuantity>(_decreaseQuantity);
@@ -44,59 +51,94 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
     });
   }
 
-  void _increaseQuantity(IncreaseQuantity event, Emitter<BasketState> emit) {
-    state.maybeWhen(
-      loaded: (products, total) {
-        final updated = products.map((p) {
-          if (p.productId == event.productId) {
-            final newQuantity = (p.quantity) + 1;
-            return p.copyWith(quantity: newQuantity, inBasket: true);
-          }
-          return p;
-        }).toList();
+  Future<void> _increaseQuantity(
+    IncreaseQuantity event,
+    Emitter<BasketState> emit,
+  ) async {
+    await state.maybeWhen(
+      loaded: (products, total) async {
+        final product = products.firstWhere(
+          (p) => p.productId == event.productId,
+          orElse: () => products.first,
+        );
+        final newQuantity = product.quantity + 1;
 
-        final newTotal = _calculateTotal(updated);
-        emit(BasketState.loaded(updated, newTotal));
+        // Save to SharedPreferences
+        await _updateBasketQuantityUsecase(
+          UpdateBasketQuantityParams(
+            productId: event.productId,
+            quantity: newQuantity,
+          ),
+        );
+
+        // Reload basket products to get updated state
+        final result = await _getBasketProductsUsecase(const NoParams());
+        result.fold(
+          (failure) => emit(BasketState.failure(failure.message)),
+          (updatedProducts) {
+            final newTotal = _calculateTotal(updatedProducts);
+            emit(BasketState.loaded(updatedProducts, newTotal));
+          },
+        );
       },
-      orElse: () {},
+      orElse: () async {},
     );
   }
 
-  void _decreaseQuantity(DecreaseQuantity event, Emitter<BasketState> emit) {
-    state.maybeWhen(
-      loaded: (products, total) {
-        final updated = products
-            .map((p) {
-              if (p.productId == event.productId) {
-                final newQuantity = (p.quantity) - 1;
-                if (newQuantity <= 0) {
-                  return null;
-                }
-                return p.copyWith(quantity: newQuantity);
-              }
-              return p;
-            })
-            .whereType<ProductModel>()
-            .toList();
+  Future<void> _decreaseQuantity(
+    DecreaseQuantity event,
+    Emitter<BasketState> emit,
+  ) async {
+    await state.maybeWhen(
+      loaded: (products, total) async {
+        final product = products.firstWhere(
+          (p) => p.productId == event.productId,
+          orElse: () => products.first,
+        );
+        final newQuantity = product.quantity - 1;
 
-        final newTotal = _calculateTotal(updated);
-        emit(BasketState.loaded(updated, newTotal));
+        if (newQuantity <= 0) {
+          // Remove from basket
+          await _removeFromBasketUsecase(event.productId);
+        } else {
+          // Update quantity
+          await _updateBasketQuantityUsecase(
+            UpdateBasketQuantityParams(
+              productId: event.productId,
+              quantity: newQuantity,
+            ),
+          );
+        }
+
+        // Reload basket products to get updated state
+        final result = await _getBasketProductsUsecase(const NoParams());
+        result.fold(
+          (failure) => emit(BasketState.failure(failure.message)),
+          (updatedProducts) {
+            final newTotal = _calculateTotal(updatedProducts);
+            emit(BasketState.loaded(updatedProducts, newTotal));
+          },
+        );
       },
-      orElse: () {},
+      orElse: () async {},
     );
   }
 
-  void _removeProduct(RemoveProduct event, Emitter<BasketState> emit) {
-    state.maybeWhen(
-      loaded: (products, total) {
-        final updated = products
-            .where((p) => p.productId != event.productId)
-            .toList();
+  Future<void> _removeProduct(
+    RemoveProduct event,
+    Emitter<BasketState> emit,
+  ) async {
+    // Save to SharedPreferences
+    await _removeFromBasketUsecase(event.productId);
 
-        final newTotal = _calculateTotal(updated);
-        emit(BasketState.loaded(updated, newTotal));
+    // Reload basket products to get updated state
+    final result = await _getBasketProductsUsecase(const NoParams());
+    result.fold(
+      (failure) => emit(BasketState.failure(failure.message)),
+      (products) {
+        final total = _calculateTotal(products);
+        emit(BasketState.loaded(products, total));
       },
-      orElse: () {},
     );
   }
 }

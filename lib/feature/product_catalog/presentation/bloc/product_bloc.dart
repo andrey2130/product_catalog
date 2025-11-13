@@ -6,6 +6,7 @@ import 'package:catalog_product/data/models/product_model.dart';
 import 'package:catalog_product/feature/product_catalog/domain/usecase/get_all_product_usecase.dart';
 import 'package:catalog_product/feature/product_catalog/domain/usecase/get_product_by_id_usecase.dart';
 import 'package:catalog_product/feature/product_catalog/domain/usecase/toggle_favorite_usecase.dart';
+import 'package:catalog_product/feature/cart/domain/usecases/add_to_basket_usecase.dart';
 
 part 'product_event.dart';
 part 'product_state.dart';
@@ -16,15 +17,18 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final GetAllProductUsecase _getAllProductUsecase;
   final GetProductByIdUsecase _getProductByIdUsecase;
   final ToggleFavoriteUsecase _toggleFavoriteUsecase;
+  final AddToBasketUsecase _addToBasketUsecase;
 
   ProductBloc(
     this._getAllProductUsecase,
     this._getProductByIdUsecase,
     this._toggleFavoriteUsecase,
+    this._addToBasketUsecase,
   ) : super(const ProductState.initial()) {
     on<LoadAllProducts>(_loadAllproducts);
     on<ToggleFavorite>(_toggleFavorite);
     on<SearchProducts>(_searchProducts);
+    on<AddToBasket>(_addToBasket);
   }
 
   Future<void> _loadAllproducts(
@@ -98,6 +102,69 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
       // Call the usecase to persist the change
       final result = await _toggleFavoriteUsecase(event.productId);
+
+      result.fold(
+        (failure) {
+          // Revert on failure
+          emit(
+            ProductState.loaded(
+              currentState.products,
+              searchQuery: currentState.searchQuery,
+            ),
+          );
+          emit(ProductState.failure(failure.message));
+        },
+        (updatedProduct) {
+          // Update with the actual result from the server
+          final finalProducts = currentState.products.map((product) {
+            if (product.productId == event.productId) {
+              return updatedProduct;
+            }
+            return product;
+          }).toList();
+          emit(
+            ProductState.loaded(
+              finalProducts,
+              searchQuery: currentState.searchQuery,
+            ),
+          );
+        },
+      );
+    }
+  }
+
+  Future<void> _addToBasket(
+    AddToBasket event,
+    Emitter<ProductState> emit,
+  ) async {
+    final currentState = state;
+
+    if (currentState is Loaded) {
+      // Optimistically update the UI
+      final updatedProducts = currentState.products.map((product) {
+        if (product.productId == event.productId) {
+          return product.copyWith(
+            inBasket: true,
+            quantity: product.quantity + 1,
+          );
+        }
+        return product;
+      }).toList();
+
+      emit(
+        ProductState.loaded(
+          updatedProducts,
+          searchQuery: currentState.searchQuery,
+        ),
+      );
+
+      // Call the usecase to persist the change
+      final result = await _addToBasketUsecase(
+        AddToBasketParams(
+          productId: event.productId,
+          quantity: 1,
+        ),
+      );
 
       result.fold(
         (failure) {

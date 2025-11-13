@@ -208,8 +208,18 @@ class ProductDetailsPage extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: CustomButton(
-                      text: "Додати до кошика",
-                      onPressed: () {},
+                      text: currentProduct.inBasket
+                          ? "Вже в кошику"
+                          : "Додати до кошика",
+                      onPressed: currentProduct.inBasket
+                          ? () {}
+                          : () {
+                              context.read<ProductBloc>().add(
+                                    ProductEvent.addToBasket(
+                                      currentProduct.productId,
+                                    ),
+                                  );
+                            },
                     ),
                   ),
                 ),

@@ -1,0 +1,33 @@
+import 'package:catalog_product/core/usecases/usecase.dart';
+import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
+import 'package:catalog_product/core/failure/app_failure.dart';
+import 'package:catalog_product/data/models/product_model.dart';
+import 'package:catalog_product/feature/product_catalog/domain/repository/product_catalog_repository.dart';
+
+@injectable
+class AddToBasketUsecase
+    extends UseCase<Either<AppFailure, ProductModel>, AddToBasketParams> {
+  AddToBasketUsecase(this._repository);
+
+  final ProductCatalogRepository _repository;
+
+  @override
+  Future<Either<AppFailure, ProductModel>> call(AddToBasketParams params) {
+    return _repository.addToBasket(
+      params.productId,
+      quantity: params.quantity,
+    );
+  }
+}
+
+class AddToBasketParams {
+  final String productId;
+  final int quantity;
+
+  AddToBasketParams({
+    required this.productId,
+    this.quantity = 1,
+  });
+}
+

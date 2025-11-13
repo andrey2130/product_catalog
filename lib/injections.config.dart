@@ -12,10 +12,15 @@
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import 'core/storage/storage_service.dart' as _i263;
 import 'feature/cart/data/datasource/basket_datasource.dart' as _i787;
 import 'feature/cart/data/repository/basket_repository_impl.dart' as _i416;
 import 'feature/cart/domain/repository/basket_repository.dart' as _i764;
+import 'feature/cart/domain/usecases/add_to_basket_usecase.dart' as _i238;
 import 'feature/cart/domain/usecases/get_bascket_products_usecase.dart' as _i44;
+import 'feature/cart/domain/usecases/remove_from_basket_usecase.dart' as _i665;
+import 'feature/cart/domain/usecases/update_basket_quantity_usecase.dart'
+    as _i1057;
 import 'feature/cart/presentation/bloc/basket_bloc.dart' as _i229;
 import 'feature/favorites/data/datasource/favorites_datasource.dart' as _i802;
 import 'feature/favorites/data/repository/favorites_repository_impl.dart'
@@ -45,8 +50,9 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
+    gh.factory<_i263.StorageService>(() => _i263.StorageService());
     gh.factory<_i513.ProductCatalogDatasource>(
-      () => _i513.ProductCatalogDatasourceImpl(),
+      () => _i513.ProductCatalogDatasourceImpl(gh<_i263.StorageService>()),
     );
     gh.factory<_i227.ProductCatalogRepository>(
       () => _i52.ProductCatalogRepositoryImpl(
@@ -62,6 +68,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i764.BasketRepository>(
       () => _i416.BasketRepositoryImpl(gh<_i787.BasketDatasource>()),
     );
+    gh.factory<_i238.AddToBasketUsecase>(
+      () => _i238.AddToBasketUsecase(gh<_i227.ProductCatalogRepository>()),
+    );
+    gh.factory<_i665.RemoveFromBasketUsecase>(
+      () => _i665.RemoveFromBasketUsecase(gh<_i227.ProductCatalogRepository>()),
+    );
+    gh.factory<_i1057.UpdateBasketQuantityUsecase>(
+      () => _i1057.UpdateBasketQuantityUsecase(
+        gh<_i227.ProductCatalogRepository>(),
+      ),
+    );
     gh.factory<_i51.GetAllProductUsecase>(
       () => _i51.GetAllProductUsecase(gh<_i227.ProductCatalogRepository>()),
     );
@@ -74,9 +91,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i44.GetBascketProductsUsecase>(
       () => _i44.GetBascketProductsUsecase(gh<_i764.BasketRepository>()),
     );
-    gh.factory<_i229.BasketBloc>(
-      () => _i229.BasketBloc(gh<_i44.GetBascketProductsUsecase>()),
-    );
     gh.factory<_i682.FavoritesRepository>(
       () => _i470.FavoritesRepositoryImpl(gh<_i802.FavoritesDatasource>()),
     );
@@ -85,10 +99,18 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i51.GetAllProductUsecase>(),
         gh<_i525.GetProductByIdUsecase>(),
         gh<_i638.ToggleFavoriteUsecase>(),
+        gh<_i238.AddToBasketUsecase>(),
       ),
     );
     gh.factory<_i199.GetFavoriteProductsUsecase>(
       () => _i199.GetFavoriteProductsUsecase(gh<_i682.FavoritesRepository>()),
+    );
+    gh.factory<_i229.BasketBloc>(
+      () => _i229.BasketBloc(
+        gh<_i44.GetBascketProductsUsecase>(),
+        gh<_i665.RemoveFromBasketUsecase>(),
+        gh<_i1057.UpdateBasketQuantityUsecase>(),
+      ),
     );
     gh.factory<_i502.FavoritesBloc>(
       () => _i502.FavoritesBloc(
